@@ -1,0 +1,1773 @@
+<!DOCTYPE html>
+<html lang="si">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sri Lanka Cricket - Professional Coaching Portal</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap');
+        
+        :root {
+            --slc-blue: #002654;
+            --slc-gold: #ffbe29;
+            --slc-green: #004d26;
+        }
+
+        body { 
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
+            color: #1e293b;
+            scroll-behavior: smooth;
+        }
+
+        .sidebar-gradient {
+            background: linear-gradient(180deg, #004d26 0%, #002600 100%);
+        }
+
+        .header-glass {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        #sidebar {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            width: 300px;
+        }
+
+        @media (max-width: 1023px) {
+            #sidebar { transform: translateX(-100%); }
+            #sidebar.open { transform: translateX(0); }
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            padding: 12px 20px;
+            margin: 4px 12px;
+            border-radius: 10px;
+            color: #e2e8f0;
+            font-weight: 500;
+            transition: all 0.2s;
+            font-size: 0.95rem;
+        }
+
+        .nav-link:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: #ffbe29;
+            padding-left: 28px;
+        }
+
+        .shot-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: 1px solid #f1f5f9;
+            scroll-margin-top: 100px;
+        }
+
+        .shot-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+
+        .img-container {
+            width: 100%;
+            height: 180px;
+            background: #f1f5f9;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            font-size: 3rem;
+        }
+
+        .badge-number {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: #ffbe29;
+            color: #000;
+            width: 35px;
+            height: 35px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            font-weight: 800;
+            font-size: 0.9rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .marquee-container {
+            background: #002654;
+            color: white;
+            padding: 10px 0;
+            overflow: hidden;
+        }
+
+        .animate-marquee {
+            display: inline-block;
+            white-space: nowrap;
+            animation: marquee 25s linear infinite;
+        }
+
+        @keyframes marquee {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
+
+        .step-pill {
+            display: inline-block;
+            background: #f1f5f9;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: #475569;
+            margin-bottom: 8px;
+        }
+
+        .info-panel {
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 1rem;
+            background: #fafafa;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+<div id="overlay" class="fixed inset-0 bg-black/60 z-[90] hidden lg:hidden" onclick="toggleSidebar()"></div>
+
+<!-- SIDEBAR -->
+<aside id="sidebar" class="fixed top-0 left-0 h-full sidebar-gradient text-white shadow-2xl overflow-y-auto z-[100]">
+    <div class="p-8">
+        <div class="bg-white p-2 rounded-lg inline-block mb-4">
+            <span class="text-green-900 font-black text-xl italic leading-none">SLC PRO</span>
+        </div>
+        <p class="text-xs text-green-300 font-bold tracking-widest uppercase">Coaching Portal</p>
+    </div>
+
+    <div class="mt-2">
+        <h3 class="px-8 text-xs font-black text-green-400 uppercase tracking-[0.2em] mb-4">Batting (පිතිකරණය)</h3>
+        <nav>
+             <a href="#shot-1" class="nav-link">1. Stance</a>
+            <a href="#shot-2" class="nav-link">2. Forward Defence</a>
+            <a href="#shot-3" class="nav-link">3. Cover Drive</a>
+            <a href="#shot-4" class="nav-link">4. Back Foot Drive</a>
+            <a href="#shot-5" class="nav-link">5. Pull Shot</a>
+            <a href="#shot-6" class="nav-link">6. Square Drive</a>
+            <a href="#shot-7" class="nav-link">7. Leg Glance</a>
+            <a href="#shot-8" class="nav-link">8. Sweep Shot</a>
+            <a href="#shot-9" class="nav-link">9. Horizontal Shot</a>
+            <a href="#shot-10" class="nav-link">10. Hook Shot</a>
+            <a href="#shot-11" class="nav-link">11.Reverse Sweep</a>
+            <a href="#shot-12" class="nav-link">12. Paddle Sweep</a>
+            <a href="#shot-13" class="nav-link">13. Helicopter Shot</a>
+            <a href="#shot-14" class="nav-link">14. Upper Cut</a>
+            <a href="#shot-15" class="nav-link">15. On Drive</a>
+            <a href="#shot-16" class="nav-link">16. Switch Hit</a>
+            <a href="#shot-17" class="nav-link">17. Late Cut</a>
+            <a href="#shot-18" class="nav-link">18. Slog Sweep</a>
+            <a href="#shot-19" class="nav-link">19. Straight Drive</a>
+            <a href="#shot-20" class="nav-link">20. Lofted Drive</a>
+            <a href="#shot-21" class="nav-link">21. Cut Shot</a>
+            <a href="#shot-22" class="nav-link">22. Scoop</a>
+            <a href="#shot-23" class="nav-link">23. Square Cut</a>
+        </nav>
+
+        <h3 class="px-8 text-xs font-black text-green-400 uppercase tracking-[0.2em] mt-8 mb-4">Bowling</h3>
+        <nav>
+            <a href="#spin-24" class="nav-link">24. Spin Bowling</a>
+            <a href="#fast-25" class="nav-link">25. Fast Bowling</a>
+        </nav>
+
+        <h3 class="px-8 text-xs font-black text-green-400 uppercase tracking-[0.2em] mt-8 mb-4">Fielding </h3>
+        <nav>
+            <a href="#catch-26" class="nav-link">26. Catch</a>
+            <a href="#runout-27" class="nav-link">27. Run Out</a>
+        </nav>
+    </div>
+
+    <div class="px-6 mt-12 pb-10">
+        <div class="p-4 bg-white/5 rounded-2xl border border-white/10">
+            <p class="text-xs text-gray-400 mb-3">Language (භාෂාව)</p>
+            <div class="flex gap-2">
+                <button onclick="switchLanguage('si')" id="btn-si" class="flex-1 py-2 bg-white text-green-900 text-xs font-bold rounded-lg">සිංහල</button>
+                <button onclick="switchLanguage('en')" id="btn-en" class="flex-1 py-2 bg-green-800 text-white text-xs font-bold rounded-lg">English</button>
+            </div>
+        </div>
+    </div>
+</aside>
+
+<!-- MAIN CONTENT -->
+<div class="flex-1 flex flex-col lg:ml-[300px]">
+    <header class="header-glass sticky top-0 z-50 py-4 px-6 md:px-10 flex items-center justify-between">
+        <div class="flex items-center">
+            <button onclick="toggleSidebar()" class="lg:hidden p-2 hover:bg-gray-100 rounded-lg mr-4 text-green-900">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+            </button>
+            <div>
+                <h1 id="mainTitle" class="text-xl md:text-2xl font-black text-slate-800 uppercase tracking-tight">Sri Lanka Cricket Pro</h1>
+                <p id="subTitle" class="text-[10px] md:text-xs text-slate-500 font-bold tracking-widest uppercase">Professional Coaching Masterclass</p>
+            </div>
+        </div>
+    </header>
+
+    <div class="marquee-container">
+        <div class="animate-marquee">
+            🏏 පන්දු රැකීම සහ පිතිකරණය පිළිබඳ වෘත්තීය මාර්ගෝපදේශ • Professional Fielding & Batting Guidelines 2025 • National Standard Coaching Portal
+        </div>
+    </div>
+
+    <main class="p-6 md:p-12 max-w-7xl mx-auto w-full">
+        <section class="mb-20">
+            <div class="flex items-center gap-4 mb-10">
+                <div class="h-10 w-2 bg-yellow-400 rounded-full"></div>
+                <h2 id="battingTitle" class="text-3xl font-extrabold text-slate-800 tracking-tight">පිතිකරණ පුහුණුව</h2>
+            </div>
+            
+            <div class="grid grid-cols-1 gap-12">
+                <!-- SHOT 1: STANCE -->
+                <article id="shot-1" class="max-w-4xl mx-auto my-8 bg-white rounded-2xl shadow-lg overflow-hidden border border-slate-200 font-sans">
+          <div class="relative group max-w-2xl mx-auto">
+    <div class="relative bg-slate-50 rounded-2xl overflow-hidden border-4 border-white shadow-xl transition-all duration-300 hover:shadow-2xl hover:scale-[1.01]">
+        <img src="https://cdn.shopify.com/s/files/1/0278/4565/6649/files/WhatsApp_Image_2023-07-29_at_18.28.10_2.webp?v=1690636195" 
+             alt="Detailed Cricket Batting Stance and Footwork" 
+             class="w-full h-auto object-contain block mx-auto transition-transform duration-500 group-hover:scale-105">
+        
+        <div class="absolute bottom-4 right-4 bg-gradient-to-r from-blue-700 to-indigo-600 text-white font-bold px-4 py-2 rounded-lg text-[10px] uppercase tracking-widest shadow-lg border border-blue-800">  
+     
+        <div class="badge-number">01</div>
+        <h2 class="text-3xl font-bold text-white mb-2"></h2>
+        
+    </div>
+
+    <div class="p-8">
+        <p class="text-slate-700 leading-relaxed mb-8 text-lg">
+            ක්‍රිකට් ක්‍රීඩාවේ පිතිකරුවෙකුට තිබිය යුතු වැදගත්ම දේ වන්නේ නිවැරදි <span class="font-bold text-blue-600">Batting Stance</span> එකයි. සාර්ථක පහරක් එල්ල කිරීමට අවශ්‍ය සමබරතාවය (Balance) සහ වේගය තීරණය වන්නේ මෙහි පදනම මතයි.
+        </p>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            
+            <div class="p-5 border-l-4 border-blue-500 bg-blue-50 rounded-r-lg">
+                <h3 class="text-xl font-bold text-slate-800 mb-2">01. පාද අතර පරතරය (Base)</h3>
+                <ul class="text-slate-600 space-y-2 text-sm">
+                    <li>• දෙපා උරහිස් වල පළලට සමානව තබා ගන්න (<span class="italic">Shoulder width apart</span>).</li>
+                    <li>• දෙපා එකම රේඛාවක (<span class="italic">Parallel</span>) තබා ගැනීමට උත්සාහ කරන්න.</li>
+                    <li>• පරතරය වැඩි/අඩු වීමෙන් සමබරතාවය ගිලිහී යා හැක.</li>
+                </ul>
+            </div>
+
+            <div class="p-5 border-l-4 border-green-500 bg-green-50 rounded-r-lg">
+                <h3 class="text-xl font-bold text-slate-800 mb-2">02. දණහිස් සහ ශරීරයේ බර</h3>
+                <ul class="text-slate-600 space-y-2 text-sm">
+                    <li>• දණහිස් තරමක් නමා (<span class="italic">Slightly flexed</span>) සැහැල්ලුවෙන් සිටින්න.</li>
+                    <li>• බර ඇඟිලි ප්‍රදේශය (<span class="italic">Balls of the feet</span>) මත වැඩිපුර තබා ගන්න.</li>
+                    <li>• මෙය ඕනෑම දිශාවකට ඉක්මනින් චලනය වීමට උදවු වේ.</li>
+                </ul>
+            </div>
+
+            <div class="p-5 border-l-4 border-red-500 bg-red-50 rounded-r-lg">
+                <h3 class="text-xl font-bold text-slate-800 mb-2">03. හිස සහ ඇස් මට්ටම</h3>
+                <ul class="text-slate-600 space-y-2 text-sm">
+                    <li>• <span class="font-bold">හිස ස්ථාවරව තබා ගැනීම අතිශය වැදගත් වේ.</span></li>
+                    <li>• හිස පන්දුව එන දිශාවට කෙලින් තිබිය යුතුය.</li>
+                    <li>• ඇස් දෙකම එකම මට්ටමක (<span class="italic">Level eyes</span>) තබා ගන්න.</li>
+                </ul>
+            </div>
+
+            <div class="p-5 border-l-4 border-yellow-500 bg-yellow-50 rounded-r-lg">
+                <h3 class="text-xl font-bold text-slate-800 mb-2">04. ග්‍රිප් එක සහ පිත්ත</h3>
+                <ul class="text-slate-600 space-y-2 text-sm">
+                    <li>• අත් දෙක එකට තබා ග්‍රහණය කරන්න (<span class="italic">V-shape grip</span>).</li>
+                    <li>• පිත්ත පිටුපස කඩුල්ල (<span class="italic">Off-stump</span>) දෙසට මදක් ඇල කරන්න.</li>
+                    <li>• මෙය නිවැරදි <span class="italic">Backlift</span> එකක් ලබා ගැනීමට උදවු වේ.</li>
+                </ul>
+            </div>
+
+        </div>
+
+        <div class="mt-8 p-4 bg-slate-100 rounded-xl border-dashed border-2 border-slate-300 text-center">
+            <p class="text-slate-600 text-sm">
+                <span class="font-bold text-slate-800">💡 වෘත්තීය උපදෙස:</span> පහරක් එල්ල කරන තුරු ඔබේ හිස නොසෙල්වී තබා ගැනීමට පුහුණු වන්න.
+            </p>
+        </div>
+    </div>
+</article>
+
+                <!-- SHOT 2: FORWARD DEFENCE -->
+                <article id="shot-2" class="shot-card">
+    <div class="relative">
+            <img src="https://img1.hscicdn.com/image/upload/f_auto,t_ds_w_1200,q_60/lsci/db/PICTURES/CMS/283300/283358.jpg" 
+                 alt="Virat Kohli Forward Defence" 
+                 class="w-full h-auto rounded-2xl shadow-lg border-4 border-white object-cover">
+            <div class="absolute -bottom-4 -right-4 bg-yellow-400 text-green-900 font-bold px-4 py-2 rounded-lg text-xs italic shadow-md">
+        <div class="badge-number">02</div>
+        
+    </div>
+    
+    <div class="p-8">
+        <h3 class="text-2xl font-bold" data-sh-t>Forward Defensive Stroke</h3>
+        <p class="text-slate-600 mb-6" data-sh-p>
+            ක්‍රිකට් ක්‍රීඩාවේ පිතිකරුවෙකු ප්‍රගුණ කළ යුතු මූලිකම ආරක්ෂාකාරී පහර මෙයයි. මෙහි ප්‍රධාන අරමුණ ලකුණු ලබා ගැනීම නොව, කඩුල්ල ආරක්ෂා කර ගනිමින් පන්දුවේ වේගය සහ ගමන අඩාල කිරීමයි.
+        </p>
+
+        <div class="mb-6">
+            <h4 class="font-bold text-slate-800 border-b-2 border-blue-400 inline-block mb-2">01. පන්දුව තෝරා ගැනීම (The Judgment)</h4>
+            <p class="text-slate-600 text-sm">මෙම පහර එල්ල කළ යුත්තේ පිතිකරුවාට ආසන්නව පතිත වන (Good Length), කඩුල්ල දෙසට එන පන්දු සඳහා පමණි.</p>
+        </div>
+
+        <div class="guide-box">
+            <h4 class="font-bold mb-3">ක්‍රියාත්මක වන ආකාරය:</h4>
+            <ul class="space-y-4">
+                <li>
+                    <strong class="text-blue-600">හිස සහ උරහිස:</strong> 
+                    <span class="text-sm block text-slate-700">පන්දුව දෙසට හිස සහ ඉදිරි උරහිස මෙහෙයවන්න. හිස පන්දුවට ඉහළින් (Head over the ball) තිබීම අනිවාර්ය වේ.</span>
+                </li>
+                <li>
+                    <strong class="text-blue-600">පාදයේ චලනය (Footwork):</strong> 
+                    <span class="text-sm block text-slate-700">ඉදිරි පාදය පන්දුවේ රේඛාවට (Line) ආසන්නයට ගෙන ගොස් ශරීරයේ බර ඉදිරි පාදයට මාරු කරන්න.</span>
+                </li>
+                <li>
+                    <strong class="text-blue-600">පිත්ත සහ පාදය (Bat & Pad):</strong> 
+                    <span class="text-sm block text-slate-700">පිත්ත සහ පාදය (Pad) අතර පරතරයක් නොතැබිය යුතුය. මෙය Inside edge වීම වළක්වයි.</span>
+                </li>
+                <li>
+                    <strong class="text-blue-600">පහල දීම (The Impact):</strong> 
+                    <span class="text-sm block text-slate-700">"Soft hands" හෙවත් මෘදු අත් දෙකකින් පන්දුව ස්පර්ශ කරන්න. එවිට පන්දුව උඩ නොගොස් පිතිකරුවා අසලම බිම පතිත වේ.</span>
+                </li>
+            </ul>
+        </div>
+    </div>
+</article>
+
+                <!-- SHOT 3: COVER DRIVE -->
+                <article id="shot-3" class="shot-card">
+    <div class="relative">
+            <img src="https://www.deccanchronicle.com/h-upload/2025/02/24/1893552-untitleddesign25.webp" 
+                 alt="Virat Kohli playing a Cover Drive" 
+                 class="w-full h-auto rounded-2xl shadow-lg border-4 border-white object-cover">
+            <div class="absolute -bottom-4 -right-4 bg-green-700 text-white font-bold px-4 py-2 rounded-lg text-xs italic shadow-md">
+        <div class="badge-number">03</div>
+    </div>
+    
+    <div class="p-8">
+        <h3 class="text-2xl font-bold" data-sh-t>Cover Drive</h3>
+        <p class="text-slate-600 mb-6" data-sh-p>
+            ක්‍රිකට් ක්‍රීඩාවේ වඩාත්ම අලංකාර සහ ප්‍රබල පහරක් ලෙස මෙය සැලකේ. මෙය සාර්ථකව එල්ල කිරීමට මනා සමබරතාවය (Balance) සහ නිවැරදි වේලාව (Timing) අත්‍යවශ්‍ය වේ.
+        </p>
+
+        <div class="mb-6">
+            <h4 class="font-bold text-slate-800 border-b-2 border-emerald-400 inline-block mb-2">01. පන්දුව තෝරා ගැනීම (The Selection)</h4>
+            <p class="text-slate-600 text-sm italic">කඩුල්ලෙන් පිටත (Off-stump) පතිත වන, පිතිකරුවාට ආසන්න පන්දු (Full-pitched හෝ Half-volley) සඳහා මෙය යෝග්‍ය වේ.</p>
+        </div>
+
+        <div class="guide-box" style="border-left-color: #10b981;">
+            <h4 class="font-bold mb-3">පහර එල්ල කරන තාක්ෂණික පියවර:</h4>
+            <ul class="space-y-4">
+                <li>
+                    <strong class="text-emerald-600">හිස මෙහෙයවීම:</strong> 
+                    <span class="text-sm block text-slate-700">හිස පන්දුව පතිත වන ස්ථානයට (Pitch) ඉහළින් තබා ගන්න. එවිට ශරීරයේ බර නිවැරදිව පන්දුව වෙත මාරු වේ.</span>
+                </li>
+                <li>
+                    <strong class="text-emerald-600">පාදයේ චලනය:</strong> 
+                    <span class="text-sm block text-slate-700">ඉදිරි පාදය පන්දුවේ රේඛාවට (Line) මදක් ඇතුළතින් තබන්න. ඇඟිලි Cover දිශාවට එල්ල විය යුතුය.</span>
+                </li>
+                <li>
+                    <strong class="text-emerald-600">පිත්ත ක්‍රියාත්මක කිරීම:</strong> 
+                    <span class="text-sm block text-slate-700">ඉහළ Backlift එකක සිට පිත්ත කෙලින් පහළට ගෙන එන්න. "Sweet spot" එකේ පන්දුව ස්පර්ශ කරන්න.</span>
+                </li>
+                <li>
+                    <strong class="text-emerald-600">Follow Through:</strong> 
+                    <span class="text-sm block text-slate-700">පහරින් පසු පිත්ත ඉහළට ඔසවා චලනය අවසන් කරන්න. ඉදිරි උරහිස පන්දුව ගිය දිශාවට තිබිය යුතුය.</span>
+                </li>
+            </ul>
+        </div>
+    </div>
+</article>
+
+                        <!-- SHOT 4: BACK FOOT DRIVE -->
+               <article id="shot-4" class="shot-card">
+        <div class="relative">
+            <img src="https://pbs.twimg.com/media/DHan9RwU0AAepE4.png" 
+                 alt="Back Foot Drive Technique" 
+                 class="w-full h-auto rounded-2xl shadow-lg border-4 border-white object-cover">
+            <div class="absolute -bottom-4 -right-4 bg-yellow-400 text-green-900 font-bold px-4 py-2 rounded-lg text-xs italic">
+               
+        <div class="badge-number">04</div>
+        
+    </div>
+    
+    
+    <div class="p-8">
+        <h3 class="text-2xl font-bold" data-sh-t>Back Foot Drive</h3>
+        <p class="text-slate-600 mb-6" data-sh-p>
+            වේගපන්දු යවන්නෙකුගේ ඉණ මට්ටමට හෝ ඊට මඳක් ඉහළින් එන (Short of length) පන්දු වලට එරෙහිව ක්‍රීඩා කරන ඉතාමත් ආකර්ෂණීය මෙන්ම ලකුණු රැස් කළ හැකි පහරකි.
+        </p>
+        
+
+        <div class="guide-box" style="border-left-color: #f59e0b;">
+            <h4 class="font-bold mb-4">පහර එල්ල කරන තාක්ෂණික පියවර:</h4>
+            <ul class="space-y-4">
+                <li>
+                    <strong class="text-orange-600">01. පන්දුව හඳුනා ගැනීම:</strong> 
+                    <span class="text-sm block text-slate-700">පන්දුව Short of a length පතිත වී උරහිස් හෝ ඉණ මට්ටමට ඉහළ යන බව තහවුරු වූ විට පමණක් මෙය තෝරාගන්න.</span>
+                </li>
+                <li>
+                    <strong class="text-orange-600">02. පාදයේ චලනය (Back & Across):</strong> 
+                    <span class="text-sm block text-slate-700">පසුපස පාදය කඩුල්ල දෙසට සහ Off-side එක දෙසට ගෙන යන්න. ශරීරයේ බර නිවැරදිව පසුපස පාදයට මාරු කරන්න.</span>
+                </li>
+                <li>
+                    <strong class="text-orange-600">03. ශරීරයේ ඉරියව්ව සහ සමබරතාවය:</strong> 
+                    <span class="text-sm block text-slate-700">පහර එල්ල කරන විට හිස පන්දුවට ඉහළින් ස්ථාවරව තබා ගන්න. උරහිස පන්දුව දෙසට යොමු වී තිබිය යුතුය.</span>
+                </li>
+                <li>
+                    <strong class="text-orange-600">04. පිත්ත ක්‍රියාත්මක කිරීම:</strong> 
+                    <span class="text-sm block text-slate-700">පිත්ත ඉහළ සිට පහළට (High to low) ගෙන එන්න. වැලමිට ඉහළට එසවී තිබීමෙන් පන්දුව පොළොව දිගේ පාලනය කිරීමට හැකි වේ.</span>
+                </li>
+                <li>
+                    <strong class="text-orange-600">05. Follow Through:</strong> 
+                    <span class="text-sm block text-slate-700">පහර අවසානයේ පිත්ත ස්වාභාවිකව ඉදිරියට ගලා යාමට ඉඩ දෙන්න. මැණික් කටුව පමණට වඩා කරකැවීමෙන් වළකින්න.</span>
+                </li>
+            </ul>
+        </div>
+    </div>
+</article>
+
+                        <!-- SHOT 5: PULL SHOT -->
+                <article id="shot-5" class="shot-card">
+         <div class="relative group max-w-2xl mx-auto">
+    <div class="relative bg-gray-50 rounded-2xl overflow-hidden border-4 border-white shadow-xl transition-transform duration-300 hover:scale-[1.02]">
+        <img src="https://assets.sportsboom.com/Rohit_Sharma_74089a68bf.jpg" 
+             alt="Pull Shot Technique" 
+             class="w-full h-auto object-contain block mx-auto">
+        
+        <div class="absolute bottom-4 right-4 bg-orange-600 text-white font-bold px-3 py-1.5 rounded-lg text-[10px] uppercase tracking-wider shadow-sm border border-orange-700">
+        <div class="badge-number">05</div>
+    </div>
+    </div>
+    
+    <div class="p-8">
+        <h3 class="text-2xl font-bold" data-sh-t>Pull Shot</h3>
+        <p class="text-slate-600 mb-6" data-sh-p>
+            වේගපන්දු යවන්නෙකුගේ ඉණ මට්ටමට හෝ ඊට ඉහළින් එන කෙටි පන්දු (Short pitched balls) වලට එරෙහිව ක්‍රීඩා කරන ඉතා ප්‍රබල පහරකි. නිවැරදිව එල්ල කළහොත් පහසුවෙන් හතරේ හෝ හයේ පහරවල් ලබාගත හැක.
+        </p>
+
+        <div class="guide-box" style="border-left-color: #ef4444;">
+            <h4 class="font-bold mb-4">පහර එල්ල කරන වෘත්තීය මාර්ගෝපදේශය:</h4>
+            <ul class="space-y-4">
+                <li>
+                    <strong class="text-red-600">01. පන්දුව තෝරාගැනීම (The Setup):</strong> 
+                    <span class="text-sm block text-slate-700">පන්දුව කෙටි (Short) විය යුතු අතර, එය උරහිස් හෝ පපුවේ මට්ටමට කඩුල්ල දෙසට (In line) හෝ පාද දෙසට (Leg side) එන විට තෝරාගන්න.</span>
+                </li>
+                <li>
+                    <strong class="text-red-600">02. පාදයේ චලනය (Footwork):</strong> 
+                    <span class="text-sm block text-slate-700">පසුපස පාදය කඩුල්ල දෙසට සහ මඳක් Off-side එක දෙසට (Back & Across) ගෙන යන්න. සම්පූර්ණ බර පසුපස පාදය මත රැඳවිය යුතුය.</span>
+                </li>
+                <li>
+                    <strong class="text-red-600">03. හිස සහ ඇස් (Head Position):</strong> 
+                    <span class="text-sm block text-slate-700">හිස පන්දුවට කෙළින් සහ ස්ථාවරව තබා ගන්න. පන්දුව පිත්තේ වදින තෙක්ම හොඳින් නිරීක්ෂණය කිරීම අත්‍යවශ්‍යයි.</span>
+                </li>
+                <li>
+                    <strong class="text-red-600">04. පිත්ත ක්‍රියාත්මක කිරීම (The Swing):</strong> 
+                    <span class="text-sm block text-slate-700">පිත්ත හරස් අතට (Horizontal) සහ ඉහළ සිට පහළට ගෙන එන්න. පන්දුව වැදුණු වහාම මැණික් කටුව (Wrists) පහළට කරකවන්න (Roll).</span>
+                </li>
+                <li>
+                    <strong class="text-red-600">05. සමබරතාවය (Follow Through):</strong> 
+                    <span class="text-sm block text-slate-700">පහරින් පසු පපුව පන්දුව ගිය දිශාවට (Mid-wicket) හරවන්න. අවසානය දක්වා ශරීරයේ සමබරතාවය ස්ථාවරව තබා ගන්න.</span>
+                </li>
+            </ul>
+        </div>
+    </div>
+</article>
+
+                        <!-- SHOT 6: SQUARE DRIVE -->
+               <article id="shot-6" class="shot-card">
+    <div class="relative">
+            <img src="https://img1.hscicdn.com/image/upload/f_auto,t_ds_w_1200,q_60/lsci/db/PICTURES/CMS/286000/286037.jpg" 
+                 alt="Joe Root playing a Square Drive" 
+                 class="w-full h-auto rounded-2xl shadow-lg border-4 border-white object-cover">
+            <div class="absolute -bottom-4 -right-4 bg-indigo-600 text-white font-bold px-4 py-2 rounded-lg text-xs italic shadow-md">
+        <div class="badge-number">06</div>
+        
+    </div>
+    
+    <div class="p-8">
+        <h3 class="text-2xl font-bold" data-sh-t>Square Drive</h3>
+        <p class="text-slate-600 mb-6" data-sh-p>
+            පන්දුව කඩුල්ලට ඈතින් (Wide of off-stump) පතිත වූ අවස්ථාවක, පන්දුවේ වේගය පාවිච්චි කරමින් Point හෝ Backward Point කලාප හරහා එල්ල කරන ඉතාමත් සුන්දර පහරකි.
+        </p>
+
+        <div class="guide-box" style="border-left-color: #10b981;">
+            <h4 class="font-bold mb-4">පහර එල්ල කරන වෘත්තීය මාර්ගෝපදේශය:</h4>
+            <ul class="space-y-4">
+                <li>
+                    <strong class="text-emerald-600">01. පන්දුව හඳුනා ගැනීම (The Delivery):</strong> 
+                    <span class="text-sm block text-slate-700">පන්දුව Off-stump එකෙන් මඳක් ඈතින් (Wide) සහ Full-length පරාසයේ තිබිය යුතුයි.</span>
+                </li>
+                <li>
+                    <strong class="text-emerald-600">02. පාදයේ චලනය (Footwork):</strong> 
+                    <span class="text-sm block text-slate-700">ඉදිරිපස පාදය පන්දුවට මඳක් පසෙකින් තබන්න. එවිට පිත්ත හැසිරවීමට අවශ්‍ය ඉඩ (Room) ශරීරයට ලැබේ.</span>
+                </li>
+                <li>
+                    <strong class="text-emerald-600">03. ශරීරයේ ඉරියව්ව (Body Position):</strong> 
+                    <span class="text-sm block text-slate-700">ශරීරයේ බර ඉදිරි පාදයට මාරු කරමින්, හිස පන්දුවට කෙළින්ම ඉහළින් (Head over the ball) තබා ගන්න.</span>
+                </li>
+                <li>
+                    <strong class="text-emerald-600">04. පහර සහ වේලාව (The Swing & Timing):</strong> 
+                    <span class="text-sm block text-slate-700">පිත්තේ මුහුණත මඳක් විවෘත කරමින් (Open the face) පන්දුව Point දෙසට හරවන්න. මෙහිදී ශක්තියට වඩා Timing වැදගත් වේ.</span>
+                </li>
+                <li>
+                    <strong class="text-emerald-600">05. මැණික් කටුව භාවිතය (Wrist Work):</strong> 
+                    <span class="text-sm block text-slate-700">පන්දුව පොළොව දිගේ ගමන් කරවීමට නම්, පන්දුව ස්පර්ශ වූ වහාම මැණික් කටුව පහළට කරකවන්න (Roll the wrists).</span>
+                </li>
+            </ul>
+        </div>
+    </div>
+</article>
+                        
+                <!-- SHOT 7: LEG GLANCE -->
+                <article id="shot-7" class="shot-card">
+               <div class="relative group max-w-2xl mx-auto">
+    <div class="relative bg-slate-50 rounded-2xl overflow-hidden border-4 border-white shadow-xl transition-all duration-300 hover:shadow-2xl hover:scale-[1.01]">
+        <img src="https://blog.playo.co/wp-content/uploads/2017/12/leg-glance-cricket.jpg" 
+             alt="Cricket Leg Glance Technique" 
+             class="w-full h-auto object-contain block mx-auto transition-transform duration-500 group-hover:scale-105">
+        
+        <div class="absolute bottom-4 right-4 bg-gradient-to-r from-blue-900 to-amber-500 text-white font-bold px-4 py-2 rounded-lg text-[10px] uppercase tracking-widest shadow-lg border border-blue-950">
+        <div class="badge-number">08</div>
+      
+    </div>
+ </div>     
+    
+    <div class="p-8">
+        <h3 class="text-2xl font-bold" data-sh-t>Leg Glance</h3>
+        <p class="text-slate-600 mb-6" data-sh-p>
+            පන්දුවේ වේගය ඉතාමත් සූක්ෂ්ම ලෙස ප්‍රයෝජනයට ගනිමින්, මැණික් කටුව ආධාරයෙන් පන්දුව Fine-leg හෝ Square-leg කලාපයට හරවා යවන ඉතාමත් ආකර්ෂණීය පහරකි.
+        </p>
+
+        <div class="guide-box" style="border-left-color: #a855f7;">
+            <h4 class="font-bold mb-4">පහර එල්ල කරන වෘත්තීය මාර්ගෝපදේශය:</h4>
+            <ul class="space-y-4">
+                <li>
+                    <strong class="text-purple-600">01. පන්දුව හඳුනා ගැනීම:</strong> 
+                    <span class="text-sm block text-slate-700">පන්දුව Leg-stump එක දෙසට හෝ පාද දෙසට (On the pads) එන විට මෙය ක්‍රියාත්මක කරන්න. මෙය ඕනෑම Length එකක පන්දුවකට එල්ල කළ හැක.</span>
+                </li>
+                <li>
+                    <strong class="text-purple-600">02. පාදයේ චලනය (Footwork):</strong> 
+                    <span class="text-sm block text-slate-700">පන්දුව Full නම් ඉදිරි පාදයත්, මඳක් කෙටි නම් පසුපස පාදයත් භාවිතා කරමින් ශරීරයේ බර නිවැරදිව පවත්වා ගන්න.</span>
+                </li>
+                <li>
+                    <strong class="text-purple-600">03. ශරීරයේ ඉරියව්ව (The Balance):</strong> 
+                    <span class="text-sm block text-slate-700">හිස පන්දුවට කෙළින්ම ඉහළින් තබා ගන්න. උරහිස පන්දුව එන දිශාවට මඳක් නැඹුරු වී තිබීම පාලනයට (Control) උදවු වේ.</span>
+                </li>
+                <li>
+                    <strong class="text-purple-600">04. මැණික් කටුව ක්‍රියාත්මක කිරීම:</strong> 
+                    <span class="text-sm block text-slate-700">පන්දුව පිත්තේ වැදීමට පෙර මැණික් කටුව කරකවා (Closing the face) පන්දුව හරවා යවන්න. මෙහිදී වේගය යෙදීමට වඩා මෘදු ස්පර්ශය (Deflecting) වැදගත් වේ.</span>
+                </li>
+                <li>
+                    <strong class="text-purple-600">05. ස්පර්ශ කරන මොහොත (Play Late):</strong> 
+                    <span class="text-sm block text-slate-700">පන්දුව ඇස් වලට සහ ශරීරයට ඉතා ආසන්න වන තෙක් බලා සිට පහර දෙන්න. මෙය නිවැරදි දිශාගත කිරීම තහවුරු කරයි.</span>
+                </li>
+            </ul>
+        </div>
+    </div>
+</article>
+
+                        <!-- SHOT 8: SWEEP SHOT -->
+              <article id="shot-8" class="shot-card">
+    <div class="relative group max-w-2xl mx-auto">
+    <div class="relative bg-slate-50 rounded-2xl overflow-hidden border-4 border-white shadow-xl transition-all duration-300 hover:shadow-2xl hover:-translate-y-1">
+        <img src="https://img1.hscicdn.com/image/upload/f_auto,t_ds_w_1200,q_60/lsci/db/PICTURES/CMS/411700/411772.jpg" 
+             alt="Kusal Mendis playing a Sweep Shot" 
+             class="w-full h-auto object-contain block mx-auto transition-transform duration-500 group-hover:scale-105">
+        
+        <div class="absolute bottom-4 right-4 bg-red-600 text-white font-bold px-4 py-2 rounded-lg text-[10px] uppercase tracking-widest shadow-lg border border-red-700">
+        <div class="badge-number">08</div>
+        
+    </div>
+    
+    <div class="p-8">
+        <h3 class="text-2xl font-bold" data-sh-t>Sweep Shot</h3>
+        <p class="text-slate-600 mb-6" data-sh-p>
+            ප්‍රධාන වශයෙන්ම දඟපන්දු යවන්නන්ට (Spinners) එරෙහිව ක්‍රීඩා කරන, පන්දු රකින්නන් පීඩනයට පත් කළ හැකි ඉතාමත් සාර්ථක පහරකි. පන්දුවේ දිශාව සූක්ෂ්ම ලෙස වෙනස් කිරීමට මෙය යොදාගනී.
+        </p>
+
+        <div class="guide-box" style="border-left-color: #6366f1;">
+            <h4 class="font-bold mb-4">පහර එල්ල කරන වෘත්තීය මාර්ගෝපදේශය:</h4>
+            <ul class="space-y-4">
+                <li>
+                    <strong class="text-indigo-600">01. පන්දුව තෝරාගැනීම (Selection):</strong> 
+                    <span class="text-sm block text-slate-700">පන්දුව Off හෝ Leg-stump රේඛාවේ Full-length පතිත වන විට මෙය තෝරාගන්න. පන්දුව දඟකැවී (Turn) එන අවස්ථාවලදී මෙය වඩාත් ඵලදායී වේ.</span>
+                </li>
+                <li>
+                    <strong class="text-indigo-600">02. පාදයේ චලනය (Footwork):</strong> 
+                    <span class="text-sm block text-slate-700">ඉදිරිපස පාදය පන්දුව දෙසට ඉදිරියට ගන්න. පසුපස පාදයේ දණහිස (Back knee) පොළොව මත තබන්න. මෙය ඔබට අවශ්‍ය ස්ථාවරත්වය ලබා දෙයි.</span>
+                </li>
+                <li>
+                    <strong class="text-indigo-600">03. හිස සහ ශරීරය (Head & Body):</strong> 
+                    <span class="text-sm block text-slate-700">හිස පන්දුවට ඉහළින් සහ ඉදිරියට නැඹුරු වී තිබිය යුතුයි. පන්දුව පිත්තේ වදින තෙක්ම ඇස් මට්ටම ස්ථාවරව තබා ගැනීම අත්‍යවශ්‍යයි.</span>
+                </li>
+                <li>
+                    <strong class="text-indigo-600">04. පිත්ත ක්‍රියාත්මක කිරීම (The Swing):</strong> 
+                    <span class="text-sm block text-slate-700">පිත්ත හරස් අතට (Horizontal) සහ ඉහළ සිට පහළට ගෙන එන්න. ඉදිරිපස අතින් (Top hand) පහරේ දිශාව පාලනය කරන්න.</span>
+                </li>
+                <li>
+                    <strong class="text-indigo-600">05. මැණික් කටුව සහ අවසානය (The Finish):</strong> 
+                    <span class="text-sm block text-slate-700">පන්දුව පොළොව දිගේ යැවීමට මැණික් කටුව පහළට හරවන්න (Roll). පන්දුව Square-leg හෝ Fine-leg දෙසට යන තෙක් පිත්ත සම්පූර්ණයෙන්ම ක්‍රියාත්මක කරන්න.</span>
+                </li>
+            </ul>
+        </div>
+    </div>
+</article>
+
+                        <!-- SHOT 9: HORIZONTAL SHOT -->
+               <article id="shot-9" class="shot-card">
+    <div class="relative group max-w-md mx-auto">
+    <div class="relative bg-slate-100 rounded-2xl overflow-hidden border-4 border-white shadow-xl transition-all duration-300 hover:shadow-2xl">
+        <img src="https://img1.hscicdn.com/image/upload/f_auto,t_ds_w_1200,q_60/lsci/db/PICTURES/CMS/365000/365021.jpg" 
+             alt="Shubman Gill playing a Horizontal Bat Shot" 
+             class="w-full max-h-[500px] object-contain block mx-auto transition-transform duration-500 group-hover:scale-105">
+        
+        <div class="absolute bottom-4 right-4 bg-blue-700 text-white font-bold px-4 py-2 rounded-lg text-[10px] uppercase tracking-widest shadow-lg border border-blue-800">
+        <div class="badge-number">09</div>
+    
+    </div>
+    
+    <div class="p-8">
+        <h3 class="text-2xl font-bold" data-sh-t>Horizontal Bat Shots</h3>
+        <p class="text-slate-600 mb-6" data-sh-p>
+            කෙටි පන්දු (Short pitched balls) වලට එරෙහිව ක්‍රියාත්මක කරන ඉතාමත් ප්‍රබල පහරවල් කාණ්ඩයකි. පිත්ත පොළොවට සමාන්තරව තබා පන්දුවේ වේගය සහ පිත්තේ බලය උපයෝගී කරගෙන මේවා ක්‍රීඩා කරයි.
+        </p>
+
+        <div class="mb-4 p-4 border rounded-lg bg-orange-50 border-orange-200">
+            <h4 class="font-bold text-orange-800 mb-1">1. Pull Shot (ඉණ මට්ටමේ පන්දු සඳහා)</h4>
+            <p class="text-sm text-slate-700">Mid-wicket හෝ Square-leg කලාපයට එල්ල කරයි. පන්දුව පොළොව දිගේ යැවීමට නම් පිත්ත <span class="font-bold">ඉහළ සිට පහළට (High to Low)</span> ගෙන එන්න.</p>
+        </div>
+
+        <div class="mb-4 p-4 border rounded-lg bg-red-50 border-red-200">
+            <h4 class="font-bold text-red-800 mb-1">2. Hook Shot (හිස මට්ටමේ පන්දු සඳහා)</h4>
+            <p class="text-sm text-slate-700">මුහුණ හෝ හිස මට්ටමට එන පන්දු (Bouncer) සඳහා Fine-leg කලාපයට එල්ල කරයි. මෙය අවදානම් සහගත පහරක් බැවින් පන්දුවට පිටුපසින් (Behind the line) සිටීම අනිවාර්ය වේ.</p>
+        </div>
+
+        <div class="mb-6 p-4 border rounded-lg bg-blue-50 border-blue-200">
+            <h4 class="font-bold text-blue-800 mb-1">3. Square Cut (ඈතින් එන පන්දු සඳහා)</h4>
+            <p class="text-sm text-slate-700">Off-stump එකෙන් ඈතින් එන පන්දු වලට Point කලාපය හරහා එල්ල කරයි. පසුපස පාදය පන්දුවේ රේඛාවට සමාන්තරව (Back and Across) ගෙන යාම මෙහිදී වැදගත් වේ.</p>
+        </div>
+
+        <div class="guide-box" style="border-left-color: #f43f5e;">
+            <h4 class="font-bold mb-3">වෘත්තීය තාක්ෂණික මූලධර්ම:</h4>
+            <ul class="space-y-3">
+                <li><strong class="text-rose-600">Horizontal Bat:</strong> පන්දුව වැදෙන මොහොතේ පිත්ත හරස් අතට තිබීමෙන් වැඩි බලයක් ලබාගත හැක.</li>
+                <li><strong class="text-rose-600">Top Hand Control:</strong> ඉදිරිපස අතින් (Top hand) පහරේ දිශාව පාලනය කිරීම මගින් පන්දුව උඩ නොගොස් බිම දිගේ යැවිය හැක.</li>
+                <li><strong class="text-rose-600">Risk Management:</strong> Hook පහරක් එල්ල කිරීමේදී පාලනය ගිලිහී යන්නේ නම් පන්දුව මඟහැරීම (Duck) වඩාත් ආරක්ෂිතය.</li>
+            </ul>
+        </div>
+    </div>
+</article>
+
+                        <!-- SHOT 10: HOOK SHOT -->
+                <article id="shot-10" class="shot-card">
+    <div class="relative group max-w-2xl mx-auto">
+    <div class="relative bg-slate-50 rounded-2xl overflow-hidden border-4 border-white shadow-xl transition-all duration-300 hover:shadow-2xl hover:scale-[1.01]">
+        <img src="https://img1.hscicdn.com/image/upload/f_auto,t_ds_w_720/lsci/db/PICTURES/CMS/303600/303693.4.jpg" 
+             alt="Cricket Hook Shot Technique" 
+             class="w-full h-auto object-contain block mx-auto transition-transform duration-500 group-hover:scale-105">
+        
+        <div class="absolute bottom-4 right-4 bg-gradient-to-r from-red-600 to-orange-600 text-white font-bold px-4 py-2 rounded-lg text-[10px] uppercase tracking-widest shadow-lg">
+        <div class="badge-number">10</div>
+        
+    </div>
+    
+    <div class="p-8">
+        <h3 class="text-2xl font-bold" data-sh-t>Hook Shot</h3>
+        <p class="text-slate-600 mb-6" data-sh-p>
+            වේගපන්දු යවන්නෙකුගේ උරහිස් හෝ හිස මට්ටමට එන Bouncers වලට එරෙහිව ක්‍රීඩා කරන, වඩාත්ම ප්‍රබල මෙන්ම අවදානම් සහගත පහරකි. මෙයට ඉතා ඉහළ ප්‍රතිචාර දැක්වීමේ වේගයක් (Reaction time) අවශ්‍ය වේ.
+        </p>
+
+        <div class="guide-box" style="border-left-color: #dc2626;">
+            <h4 class="font-bold mb-4">පහර එල්ල කරන වෘත්තීය මාර්ගෝපදේශය:</h4>
+            <ul class="space-y-4">
+                <li>
+                    <strong class="text-red-700">01. පන්දුව හඳුනා ගැනීම (The Bouncer):</strong> 
+                    <span class="text-sm block text-slate-700">පන්දුව ඉතා කෙටි (Short pitched) වී ඔබේ මුහුණේ හෝ උරහිසේ රේඛාවට එන බව තහවුරු කරගත් පසු පමණක් මෙය තෝරාගන්න.</span>
+                </li>
+                <li>
+                    <strong class="text-red-700">02. පාදයේ චලනය (Back & Across):</strong> 
+                    <span class="text-sm block text-slate-700">පසුපස පාදය කඩුල්ල දෙසට ගෙන යමින් පන්දුවට පිටුපසින් (Behind the line) සිටින්න. සම්පූර්ණ බර පසුපස පාදය මත රැඳවිය යුතුය.</span>
+                </li>
+                <li>
+                    <strong class="text-red-700">03. හිස සහ ඇස් (Head Position):</strong> 
+                    <span class="text-sm block text-slate-700">හිස ස්ථාවරව තබාගෙන පන්දුව පිත්තේ වදින තෙක්ම නිරීක්ෂණය කරන්න. පන්දුවෙන් බිය වී හිස ඉවතට ගැනීම ඉතා අනතුරුදායකයි.</span>
+                </li>
+                <li>
+                    <strong class="text-red-700">04. පිත්ත ක්‍රියාත්මක කිරීම (The Execution):</strong> 
+                    <span class="text-sm block text-slate-700">පිත්ත හරස් අතට (Horizontal) සහ ඉහළ සිට පහළට වේගයෙන් ක්‍රියාත්මක කරන්න. පන්දුව හරවා යැවීමේදී මැණික් කටුව (Wrists) පහළට කරකවන්න.</span>
+                </li>
+                <li>
+                    <strong class="text-red-700">05. ශරීරයේ හැරීම (The Pivot):</strong> 
+                    <span class="text-sm block text-slate-700">පහර එල්ල කරන විට පසුපස පාදය මත මුළු සිරුරම කරකවන්න (Pivot). මෙය පහරට අවශ්‍ය උපරිම වේගය සහ බලය ලබා දෙයි.</span>
+                </li>
+            </ul>
+        </div>
+
+        <div class="mt-6 p-4 bg-amber-50 border-l-4 border-amber-500 text-sm text-amber-800">
+            <strong>⚠️ අවදානම:</strong> පන්දුව පාලනය කරගත නොහැකි යැයි හැඟේ නම්, පහර දීමට උත්සාහ නොකර පන්දුව මඟහැරීම (Duck/Sway) වඩාත් ආරක්ෂිත ක්‍රමයයි.
+        </div>
+    </div>
+</article>
+
+
+                        <!-- SHOT 11: REVERSE SWEEP-->
+                <article id="shot-11" class="shot-card">
+    <div class="relative group max-w-2xl mx-auto">
+    <div class="relative bg-slate-100 rounded-2xl overflow-hidden border-4 border-white shadow-xl transition-all duration-300 hover:shadow-2xl hover:scale-[1.01]">
+        <img src="https://i.guim.co.uk/img/media/6bfbde36575308fc685aa10ed0777a8ee8c28fef/0_285_5000_3000/master/5000.jpg?width=1200&height=900&quality=85&auto=format&fit=crop&s=4865672d24f799c744c41ddcd815ac6c"
+             alt="Glenn Maxwell playing a Reverse Sweep Shot"
+             class="w-full h-auto object-contain block mx-auto transition-transform duration-500 group-hover:scale-105">
+
+        <div class="absolute bottom-4 right-4 bg-gradient-to-r from-purple-700 to-pink-600 text-white font-bold px-4 py-2 rounded-lg text-[10px] uppercase tracking-widest shadow-lg border border-purple-800">
+        <div class="badge-number">11</div>
+        
+    </div>
+    
+    <div class="p-8">
+        <h3 class="text-2xl font-bold" data-sh-t>Reverse Sweep</h3>
+        <p class="text-slate-600 mb-6" data-sh-p>
+            නූතන ක්‍රිකට් ක්‍රීඩාවේ දඟපන්දු යවන්නන්ගේ පන්දු රැකීමේ ව්‍යුහය (Field setting) සම්පූර්ණයෙන්ම අවුල් කළ හැකි ඉතාමත් උපක්‍රමශීලී පහරකි. මෙහිදී සිදුවන්නේ පන්දුව Off-side එක දෙසට හරවා යැවීමයි.
+        </p>
+
+        <div class="guide-box" style="border-left-color: #ec4899;">
+            <h4 class="font-bold mb-4">පහර එල්ල කරන වෘත්තීය මාර්ගෝපදේශය:</h4>
+            <ul class="space-y-4">
+                <li>
+                    <strong class="text-pink-600">01. පන්දුව හඳුනා ගැනීම සහ සූදානම:</strong> 
+                    <span class="text-sm block text-slate-700">පන්දුව කඩුල්ලේ රේඛාවේ හෝ Off-stump එක දෙසට Full length එකේ පතිත වන විට මෙය තෝරාගන්න. පන්දු යවන්නා පන්දුව මුදාහරිනවාත් සමඟම ඉරියව්ව වෙනස් කිරීමට සූදානම් වන්න.</span>
+                </li>
+                <li>
+                    <strong class="text-pink-600">02. ග්‍රහණය සහ ඉරියව්ව (Position):</strong> 
+                    <span class="text-sm block text-slate-700">මැණික් කටුව කරකවා පිත්තේ මුහුණත Point කලාපයට හරවන්න. ඉදිරිපස පාදය පන්දුව දෙසට ගෙන ගොස් පසුපස පාදයේ දණහිස (Back knee) පොළොව මත තබා ස්ථාවර වන්න.</span>
+                </li>
+                <li>
+                    <strong class="text-pink-600">03. පහර ක්‍රියාත්මක කිරීම (Execution):</strong> 
+                    <span class="text-sm block text-slate-700">පිත්ත Leg-side එකේ සිට Off-side එක දෙසට චලනය කරන්න. මැණික් කටුවේ වේගවත් චලනයෙන් (Wrist snap) පන්දුවට අවශ්‍ය වේගය ලබා දෙන්න.</span>
+                </li>
+                <li>
+                    <strong class="text-pink-600">04. පාලනය සහ නිමාව (Control):</strong> 
+                    <span class="text-sm block text-slate-700">පන්දුවට පහර දුන් පසුවත් හිස ස්ථාවරව තබා ගන්න. පන්දුව බිම දිගේ යැවීමට නම් පිත්ත ඉහළ සිට පහළට (High to Low) චලනය කිරීම වැදගත් වේ.</span>
+                </li>
+            </ul>
+        </div>
+
+        <div class="mt-6 p-4 bg-slate-50 border border-slate-200 rounded-lg text-sm text-slate-600 italic">
+            <strong>💡 මතක තබා ගන්න:</strong> පන්දුව පෑඩ් එකේ වැදුණහොත් LBW වීමේ අවදානම වැඩි බැවින් පන්දුව පිත්තේ වදින බව සහතික කර ගැනීම අතිශය වැදගත් වේ.
+        </div>
+    </div>
+</article>
+
+
+                        <!-- SHOT 12: PADDLE SWEP-->
+               <article id="shot-12" class="shot-card">
+    <div class="relative group max-w-2xl mx-auto">
+    <div class="relative bg-slate-50 rounded-2xl overflow-hidden border-4 border-white shadow-xl transition-all duration-300 hover:shadow-2xl">
+        <img src="https://staticimg.publishstory.co/thumb/127490988.cms?imgsize=22036&width=616&height=462&resizemode=8" 
+             alt="Cricket Paddle Sweep Technique" 
+             class="w-full h-auto object-contain block mx-auto transition-transform duration-500 group-hover:scale-105">
+        
+        <div class="absolute bottom-4 right-4 bg-emerald-600 text-white font-bold px-4 py-2 rounded-lg text-[10px] uppercase tracking-widest shadow-lg border border-emerald-700">
+        <div class="badge-number">12</div>
+        
+    </div>
+    
+    <div class="p-8">
+        <h3 class="text-2xl font-bold" data-sh-t>Paddle Sweep</h3>
+        <p class="text-slate-600 mb-6" data-sh-p>
+            පන්දුවේ වේගය පාවිච්චි කරමින්, පන්දුවට පහර දෙනවාට වඩා ඉතාමත් මෘදු ලෙස එය Fine-leg කලාපය දෙසට හරවා යවන (Deflecting) සූක්ෂ්ම පහරකි. මෙය දඟපන්දු යවන්නන්ට එරෙහිව භාවිතා කරන සාර්ථක උපක්‍රමයකි.
+        </p>
+
+        <div class="guide-box" style="border-left-color: #0ea5e9;">
+            <h4 class="font-bold mb-4">පහර එල්ල කරන වෘත්තීය මාර්ගෝපදේශය:</h4>
+            <ul class="space-y-4">
+                <li>
+                    <strong class="text-sky-700">01. පන්දුව තෝරාගැනීම:</strong> 
+                    <span class="text-sm block text-slate-700">පන්දුව කඩුල්ලේ රේඛාවේ හෝ Leg-stump දෙසට Full length එකේ පතිත වන විට මෙය තෝරාගන්න. ශරීරයෙන් ඈතින් පතිත වන පන්දු වලට මෙය එල්ල කිරීම අවදානම් සහගතයි.</span>
+                </li>
+                <li>
+                    <strong class="text-sky-700">02. පාදයේ චලනය සහ ඉරියව්ව:</strong> 
+                    <span class="text-sm block text-slate-700">ඉදිරිපස පාදය පන්දුව දෙසට හොඳින් ඉදිරියට ගන්න. පසුපස දණහිස (Back knee) පොළොව මත තබා ස්ථාවර වන්න. හිස පන්දුවට ඉහළින් තිබීම අනිවාර්ය වේ.</span>
+                </li>
+                <li>
+                    <strong class="text-sky-700">03. පිත්ත ක්‍රියාත්මක කිරීම (The Paddle):</strong> 
+                    <span class="text-sm block text-slate-700">පන්දුවට පහර දීම වෙනුවට, පිත්තේ මුහුණත කෝණිකව තබා පන්දුව Fine-leg දෙසට ලිස්සා යාමට (Deflect) ඉඩ දෙන්න. දෑත් හොඳින් ඉදිරියට දිගු කරන්න.</span>
+                </li>
+                <li>
+                    <strong class="text-sky-700">04. මැණික් කටුව සහ පාලනය:</strong> 
+                    <span class="text-sm block text-slate-700">පන්දුව පොළොව දිගේ යැවීමට මැණික් කටුව මෘදු ලෙස පහළට හරවන්න. මුළු පහරම "Soft Hands" භාවිතයෙන් පාලනය කළ යුතුය.</span>
+                </li>
+            </ul>
+        </div>
+
+        <div class="mt-6 p-4 bg-sky-100 rounded-xl border-dashed border-2 border-sky-300">
+            <p class="text-sky-900 text-sm italic text-center">
+                <strong>💡 වෘත්තීය උපදෙස:</strong> Paddle sweep එකේදී වැදගත් වන්නේ ශක්තිය නොව, පන්දුව ස්පර්ශ කරන "කෝණය" සහ පන්දුවේ වේගය නිවැරදිව භාවිතා කිරීමයි.
+            </p>
+        </div>
+    </div>
+</article>
+
+
+                        <!-- SHOT 13: HELICOPTER SHOT -->
+                <article id="shot-13" class="shot-card">
+    <div class="relative group max-w-2xl mx-auto">
+    <div class="relative bg-slate-50 rounded-2xl overflow-hidden border-4 border-white shadow-xl transition-all duration-300 hover:shadow-2xl hover:scale-[1.01]">
+        <img src="https://cdn.shopify.com/s/files/1/0278/4565/6649/files/WhatsApp_Image_2023-10-21_at_10.16.50.webp?v=1697865647" 
+             alt="MS Dhoni playing the iconic Helicopter Shot" 
+             class="w-full h-auto object-contain block mx-auto transition-transform duration-500 group-hover:rotate-1">
+        
+        <div class="absolute bottom-4 right-4 bg-gradient-to-r from-yellow-500 to-blue-700 text-white font-bold px-4 py-2 rounded-lg text-[10px] uppercase tracking-widest shadow-lg border border-yellow-600">
+        <div class="badge-number">13</div>
+        
+    </div>
+    
+    <div class="p-8">
+        <h3 class="text-2xl font-bold" data-sh-t>Helicopter Shot</h3>
+        <p class="text-slate-600 mb-6" data-sh-p>
+            ක්‍රිකට් ක්‍රීඩාවේ පවතින වඩාත්ම නවීන සහ ප්‍රේක්ෂක ආකර්ෂණය දිනාගත් පහරකි. මෙය ප්‍රධාන වශයෙන්ම Yorker හෝ Full-length පන්දු වලට එරෙහිව ලකුණු ලබා ගැනීමට භාවිතා කරන ප්‍රබල පහරකි.
+        </p>
+
+        <div class="guide-box" style="border-left-color: #eab308;">
+            <h4 class="font-bold mb-4">පහර එල්ල කරන වෘත්තීය මාර්ගෝපදේශය:</h4>
+            <ul class="space-y-4">
+                <li>
+                    <strong class="text-yellow-700">01. පන්දුව හඳුනා ගැනීම (The Delivery):</strong> 
+                    <span class="text-sm block text-slate-700">පන්දුව Yorker එකක් හෝ Full length එකේ Middle හෝ Leg stump රේඛාවේ එන විට මෙය තෝරාගන්න.</span>
+                </li>
+                <li>
+                    <strong class="text-yellow-700">02. ස්ථාවරත්වය (Stance & Balance):</strong> 
+                    <span class="text-sm block text-slate-700">ක්‍රීස් එකේ මඳක් පිටුපසට වන්න (Stay deep). පාද දෙක අතර හොඳ පරතරයක් තබා ගනිමින් ස්ථාවර පදනමක් (Stable base) සකසා ගන්න.</span>
+                </li>
+                <li>
+                    <strong class="text-yellow-700">03. පිත්ත ක්‍රියාත්මක කිරීම:</strong> 
+                    <span class="text-sm block text-slate-700">High backlift එකක සිට පිත්ත වේගයෙන් පහළට ගෙන එන්න. පිත්තේ මුහුණත පන්දුවට පහළින් (Underneath) තබා පන්දුව ඉහළට එසවෙන සේ පහර දෙන්න.</span>
+                </li>
+                <li>
+                    <strong class="text-yellow-700">04. මැණික් කටුවේ වේගය (Wrist Snap):</strong> 
+                    <span class="text-sm block text-slate-700">පසුපස අත (Bottom hand) මඟින් උපරිම ශක්තිය ලබා දෙමින්, පන්දුව වැදෙනවාත් සමඟ මැණික් කටුව ඉතා වේගයෙන් කරකවන්න.</span>
+                </li>
+                <li>
+                    <strong class="text-yellow-700">05. Helicopter Finish:</strong> 
+                    <span class="text-sm block text-slate-700">පහරින් පසු පිත්ත උරහිසට ඉහළින් සම්පූර්ණ වටයක් (360-degree rotation) කැරකැවීමට ඉඩ දෙන්න. මෙය පහරේ වේගය පවත්වා ගැනීමට උදවු වේ.</span>
+                </li>
+            </ul>
+        </div>
+
+        <div class="mt-6 p-4 bg-yellow-100 rounded-lg border border-yellow-200">
+            <p class="text-yellow-900 text-sm font-semibold text-center">
+                මෙම පහර සාර්ථක කර ගැනීමට මැණික් කටුවේ ශක්තිය (Wrist strength) සහ පන්දුවට පහර දෙන නිවැරදි වේලාව (Timing) ඉතා වැදගත් වේ.
+            </p>
+        </div>
+    </div>
+</article>
+
+
+
+                        <!-- SHOT 14: UPPER CUT -->
+                <article id="shot-14" class="shot-card">
+    <div class="relative group max-w-md mx-auto">
+    <div class="relative bg-slate-50 rounded-2xl overflow-hidden border-4 border-white shadow-xl transition-all duration-300 hover:shadow-2xl">
+        <img src="https://img1.hscicdn.com/image/upload/f_auto,t_ds_w_1200,q_60/lsci/db/PICTURES/CMS/300200/300260.jpg" 
+             alt="Martin Guptill playing an Upper Cut" 
+             class="w-full max-h-[550px] object-contain block mx-auto transition-transform duration-500 group-hover:scale-105">
+        
+        <div class="absolute bottom-4 right-4 bg-sky-600 text-white font-bold px-4 py-2 rounded-lg text-[10px] uppercase tracking-widest shadow-lg border border-sky-700">
+            
+        <div class="badge-number">14</div>
+        
+    </div>
+    
+    <div class="p-8">
+        <h3 class="text-2xl font-bold" data-sh-t>Upper Cut</h3>
+        <p class="text-slate-600 mb-6" data-sh-p>
+            වේගපන්දු යවන්නෙකුගේ කෙටි පන්දුවකට (Short ball) එරෙහිව, පන්දුවේ වේගය පාවිච්චි කරමින් කඩුලු රකින්නාට හෝ Third-man කලාපයට ඉහළින් එල්ල කරන ඉතාමත් සූක්ෂ්ම පහරකි.
+        </p>
+
+        <div class="guide-box" style="border-left-color: #06b6d4;">
+            <h4 class="font-bold mb-4">පහර එල්ල කරන වෘත්තීය මාර්ගෝපදේශය:</h4>
+            <ul class="space-y-4">
+                <li>
+                    <strong class="text-cyan-700">01. පන්දුව හඳුනා ගැනීම:</strong> 
+                    <span class="text-sm block text-slate-700">පන්දුව Off-stump රේඛාවේ හෝ එයින් පිටත උරහිස මට්ටමට එන කෙටි පන්දුවක් (Bouncer) විය යුතුයි.</span>
+                </li>
+                <li>
+                    <strong class="text-cyan-700">02. පාදයේ චලනය සහ ඉරියව්ව:</strong> 
+                    <span class="text-sm block text-slate-700">පසුපස පාදය මත සිට පහර එල්ල කරන්න. පන්දුවට යටින් සිටීමට අවශ්‍ය ඉඩ (Room) සලසා ගනිමින් පන්දුව එන රේඛාවට මඳක් පසෙකින් සිටින්න.</span>
+                </li>
+                <li>
+                    <strong class="text-cyan-700">03. පිත්ත ක්‍රියාත්මක කිරීම (Execution):</strong> 
+                    <span class="text-sm block text-slate-700">පිත්තේ මුහුණත අහස දෙසට විවෘත කරන්න (Open the face). පන්දුවට යටින් පිත්ත තබා පන්දුවේ වේගය භාවිතා කරමින් එය ඉහළට "සූරා" (Slice) යවන්න.</span>
+                </li>
+                <li>
+                    <strong class="text-cyan-700">04. පාලනය සහ දිශානතිය:</strong> 
+                    <span class="text-sm block text-slate-700">දෑත් හොඳින් ඉහළට දිගු කරන්න. මැණික් කටුව (Wrists) මඟින් පන්දුව Third-man දෙසට හෝ පන්දු රකින්නන් නැති හිස් අවකාශයකට (Gaps) යොමු කරන්න.</span>
+                </li>
+            </ul>
+        </div>
+
+        <div class="mt-6 p-4 bg-cyan-100 rounded-lg border border-cyan-200">
+            <p class="text-cyan-900 text-sm italic text-center">
+                <strong>💡 වෘත්තීය රහස:</strong> මෙහිදී පන්දුවට තදින් පහර දීමට උත්සාහ නොකරන්න. පන්දුවේ වේගය නිවැරදිව "මඟ පෙන්වීම" (Steering) පමණක් ප්‍රමාණවත් වේ.
+            </p>
+        </div>
+    </div>
+</article>
+
+                        <!-- SHOT 15: ON DRIVE -->
+                <article id="shot-15" class="shot-card">
+    <div class="relative group max-w-2xl mx-auto">
+    <div class="relative bg-slate-50 rounded-2xl overflow-hidden border-4 border-white shadow-xl transition-all duration-300 hover:shadow-2xl hover:scale-[1.01]">
+        <img src="http://www.zapcricket.com/cdn/shop/articles/WhatsApp_Image_2023-10-26_at_02.54.45.webp?v=1698270528" 
+             alt="Cricket On Drive Technique" 
+             class="w-full h-auto object-contain block mx-auto transition-transform duration-500 group-hover:scale-105">
+        
+        <div class="absolute bottom-4 right-4 bg-gradient-to-r from-blue-900 to-amber-500 text-white font-bold px-4 py-2 rounded-lg text-[10px] uppercase tracking-widest shadow-lg border border-blue-950">
+        <div class="badge-number">15</div>
+        
+    </div>
+    
+    <div class="p-8">
+        <h3 class="text-2xl font-bold" data-sh-t>On Drive</h3>
+        <p class="text-slate-600 mb-6" data-sh-p>
+            ක්‍රිකට් ක්‍රීඩාවේ පවතින වඩාත්ම තාක්ෂණික සහ ක්‍රීඩා කිරීමට අපහසුම පහරක් ලෙස මෙය සැලකේ. මෙය පන්දුවේ වේගය සහ සිරස් පිත්ත (Straight bat) පාවිච්චි කරමින් Mid-on කලාපය දෙසට එල්ල කරන පහරකි.
+        </p>
+
+        <div class="guide-box" style="border-left-color: #1e40af;">
+            <h4 class="font-bold mb-4">පහර එල්ල කරන වෘත්තීය මාර්ගෝපදේශය:</h4>
+            <ul class="space-y-4">
+                <li>
+                    <strong class="text-blue-800">01. පන්දුව හඳුනා ගැනීම:</strong> 
+                    <span class="text-sm block text-slate-700">පන්දුව Middle-stump හෝ Leg-stump රේඛාවේ Full length හෝ Half-volley ලෙස පතිත වන විට මෙය තෝරාගන්න.</span>
+                </li>
+                <li>
+                    <strong class="text-blue-800">02. පාදයේ චලනය (Footwork):</strong> 
+                    <span class="text-sm block text-slate-700">ඉදිරිපස පාදය පන්දුව දෙසට ගෙන යන්න. පාදයේ ඇඟිලි Mid-on දෙසට හැරී තිබිය යුතු අතර, පිත්ත ගමන් කරන මාවත (Swing path) අවහිර නොවන සේ පාදය තබන්න.</span>
+                </li>
+                <li>
+                    <strong class="text-blue-800">03. ශරීරයේ ඉරියව්ව (The Balance):</strong> 
+                    <span class="text-sm block text-slate-700">හිස පන්දුවට කෙළින්ම ඉහළින් තබා ගන්න (Head over the ball). ඉදිරිපස උරහිස පන්දුව එන දිශාවට මඳක් නැඹුරු වී තිබීම පාලනයට වැදගත් වේ.</span>
+                </li>
+                <li>
+                    <strong class="text-blue-800">04. පිත්ත ක්‍රියාත්මක කිරීම (The Swing):</strong> 
+                    <span class="text-sm block text-slate-700">High backlift එකක සිට සිරස් අතට (Vertical) පිත්ත ගලා යාමට ඉඩ දෙන්න. පහර දෙන මොහොතේ පිත්තේ සම්පූර්ණ මුහුණත පන්දුවට පෙන්විය යුතුය.</span>
+                </li>
+                <li>
+                    <strong class="text-blue-800">05. පාලනය සහ නිමාව:</strong> 
+                    <span class="text-sm block text-slate-700">ඉදිරිපස අතින් (Top hand) පහර පාලනය කරන්න. පහරින් පසු පිත්ත පන්දුව ගිය දිශාවටම දිගු කරමින් (Follow through) සමබරතාවය රැකගන්න.</span>
+                </li>
+            </ul>
+        </div>
+
+        <div class="mt-6 p-4 bg-slate-100 rounded-lg border-l-4 border-slate-400 text-sm text-slate-700">
+            <strong>📝 සටහන:</strong> On Drive එකක් නිවැරදිව එල්ල කිරීමට මනා ඉවසීමක් සහ පිත්ත ශරීරයට ඉතා ආසන්නයෙන් ගලා යාම (Playing close to the body) අත්‍යවශ්‍ය වේ.
+        </div>
+    </div>
+</article>
+
+
+
+
+                        <!-- SHOT 16: SWITCH HIT -->
+                <article id="shot-16" class="shot-card">
+    <div class="relative group max-w-2xl mx-auto">
+    <div class="relative bg-slate-50 rounded-2xl overflow-hidden border-4 border-white shadow-xl transition-all duration-300 hover:shadow-2xl hover:scale-[1.01]">
+        <img src="https://images.hindustantimes.com/img/2022/07/05/550x309/pietersen__1657016578498_1657016592035.jpg" 
+             alt="Kevin Pietersen playing a Switch Hit" 
+             class="w-full h-auto object-contain block mx-auto transition-transform duration-500 group-hover:scale-105">
+        
+        <div class="absolute bottom-4 right-4 bg-gradient-to-r from-indigo-700 to-violet-600 text-white font-bold px-4 py-2 rounded-lg text-[10px] uppercase tracking-widest shadow-lg border border-indigo-800">
+        <div class="badge-number">16</div>
+        
+    </div>
+    
+    <div class="p-8">
+        <h3 class="text-2xl font-bold" data-sh-t>Switch Hit</h3>
+        <p class="text-slate-600 mb-6" data-sh-p>
+            නූතන ක්‍රිකට් ක්‍රීඩාවේ පවතින වඩාත්ම නිර්මාණශීලී පහරකි. Reverse Sweep එකට සමාන වුවත්, මෙහිදී පිතිකරුවා තමන්ගේ ග්‍රහණය (Grip) සහ ස්ථාවරය (Stance) සම්පූර්ණයෙන්ම වෙනස් කරමින් පන්දු යවන්නා අන්දමන්ද කරයි.
+        </p>
+
+        <div class="guide-box" style="border-left-color: #6366f1;">
+            <h4 class="font-bold mb-4">පහර එල්ල කරන වෘත්තීය මාර්ගෝපදේශය:</h4>
+            <ul class="space-y-4">
+                <li>
+                    <strong class="text-indigo-600">01. වේලාව සහ සූදානම (Timing the Switch):</strong> 
+                    <span class="text-sm block text-slate-700">පන්දු යවන්නා පන්දුව මුදාහරින මොහොතේම (Delivery stride) ඉරියව්ව මාරු කරන්න. ඕනෑවට වඩා වේලාවට පෙර වෙනස් කිරීමෙන් පන්දු යවන්නාට උපක්‍රමය හෙළි විය හැක.</span>
+                </li>
+                <li>
+                    <strong class="text-indigo-600">02. ග්‍රහණය සහ පාදවල චලනය:</strong> 
+                    <span class="text-sm block text-slate-700">දෑත් පිත්තේ තිබෙන ස්ථානය (Grip switch) ක්ෂණිකව මාරු කරමින් පසුපස පාදය ඉදිරිපස පාදය බවට පත් කර මුළු සිරුරම කරකවන්න (Pivot).</span>
+                </li>
+                <li>
+                    <strong class="text-indigo-600">03. පහර ක්‍රියාත්මක කිරීම:</strong> 
+                    <span class="text-sm block text-slate-700">දණහිස් මඳක් නවා ස්ථාවර වන්න (Stable base). දෑත් හොඳින් දිගු කරමින් (Full extension) පන්දුව පිත්තේ හරි මැද (Sweet spot) වද්දා ගැනීමට උත්සාහ කරන්න.</span>
+                </li>
+                <li>
+                    <strong class="text-indigo-600">04. දිශානතිය (Direction):</strong> 
+                    <span class="text-sm block text-slate-700">මෙම පහර බොහෝ විට Cover හෝ Point කලාපයට ඉහළින් එල්ල කරයි. පන්දුවේ වේගය සහ ශරීරයේ රිද්මය අනුව මෙය හයේ පහරක් දක්වා වර්ධනය කළ හැක.</span>
+                </li>
+            </ul>
+        </div>
+
+        <div class="mt-6 p-4 bg-indigo-100 rounded-xl border-2 border-indigo-200">
+            <p class="text-indigo-900 text-sm italic text-center font-medium">
+                <strong>💡 වෘත්තීය රහස:</strong> Switch Hit එකක සාර්ථකත්වය රැඳී ඇත්තේ "විස්මයට පත් කිරීම" (Surprise element) මත බැවින්, එය ඉතාමත් කෙටි වේලාවකදී නිවැරදිව සිදු කළ යුතුය.
+            </p>
+        </div>
+    </div>
+</article>
+
+
+                        <!-- SHOT 17: LATE CUT -->
+               <article id="shot-17" class="shot-card">
+    <div class="relative group max-w-2xl mx-auto">
+    <div class="relative bg-slate-50 rounded-2xl overflow-hidden border-4 border-white shadow-xl transition-all duration-300 hover:shadow-2xl hover:scale-[1.01]">
+        <img src="https://ajrblogs.wordpress.com/wp-content/uploads/2016/03/download-87.jpg?w=640" 
+             alt="Cricket Late Cut Technique" 
+             class="w-full h-auto object-contain block mx-auto transition-transform duration-500 group-hover:scale-105">
+        
+        <div class="absolute bottom-4 right-4 bg-gradient-to-r from-blue-800 to-slate-400 text-white font-bold px-4 py-2 rounded-lg text-[10px] uppercase tracking-widest shadow-lg border border-blue-900">
+            
+        <div class="badge-number">17</div>
+        
+    </div>
+    
+    <div class="p-8">
+        <h3 class="text-2xl font-bold" data-sh-t>Late Cut</h3>
+        <p class="text-slate-600 mb-6" data-sh-p>
+            පන්දුවේ වේගය උපරිමයෙන් ප්‍රයෝජනයට ගනිමින්, පන්දුව ඔබ පසුකර යනවාත් සමඟම ඉතාමත් මෘදු ලෙස Third-man කලාපයට හරවා යවන සූක්ෂ්ම පහරකි. මෙහිදී ශක්තියට වඩා නිවැරදි වේලාව (Timing) සහ පාලනය වැදගත් වේ.
+        </p>
+
+        <div class="guide-box" style="border-left-color: #14b8a6;">
+            <h4 class="font-bold mb-4">පහර එල්ල කරන වෘත්තීය මාර්ගෝපදේශය:</h4>
+            <ul class="space-y-4">
+                <li>
+                    <strong class="text-teal-700">01. පන්දුව හඳුනා ගැනීම:</strong> 
+                    <span class="text-sm block text-slate-700">පන්දුව Off-stump එකට පිටතින් (Outside off) සහ Good length හෝ Short of length මට්ටමේ පතිත වන විට මෙය තෝරාගන්න.</span>
+                </li>
+                <li>
+                    <strong class="text-teal-700">02. පාදයේ චලනය (Back & Across):</strong> 
+                    <span class="text-sm block text-slate-700">පසුපස පාදය කඩුල්ල දෙසට ගෙන ගොස් ශරීරයේ බර ඒ මත රැඳවිය යුතුයි. ඉදිරිපස පාදය නිදහස්ව තබා ගනිමින් පන්දුවට අවශ්‍ය ඉඩ ලබා දෙන්න.</span>
+                </li>
+                <li>
+                    <strong class="text-teal-700">03. ස්පර්ශ කරන මොහොත (Play Late):</strong> 
+                    <span class="text-sm block text-slate-700">පන්දුව ඔබව පසුකර යන තෙක්ම ඉවසන්න. පන්දුව කඩුලු රකින්නාගේ දෑත් අසලටම එන තෙක් බලා සිට "මෘදු දෑත්" (Soft hands) භාවිතයෙන් ස්පර්ශ කරන්න.</span>
+                </li>
+                <li>
+                    <strong class="text-teal-700">04. පිත්ත ක්‍රියාත්මක කිරීම:</strong> 
+                    <span class="text-sm block text-slate-700">පිත්ත ඉහළ සිට පහළට ගෙන එමින් එහි මුහුණත මඳක් විවෘත කරන්න (Open the face). පන්දුව Slips පන්දු රකින්නන්ට පිටුපසින් හරවා යවන්න.</span>
+                </li>
+                <li>
+                    <strong class="text-teal-700">05. මැණික් කටුව භාවිතය:</strong> 
+                    <span class="text-sm block text-slate-700">පන්දුව පොළොව දිගේ තබා ගැනීමට මැණික් කටුව මෘදු ලෙස පහළට කරකවන්න. මෙය උඩපන්දුවක් ලෙස දැවී යාමේ අවදානම අඩු කරයි.</span>
+                </li>
+            </ul>
+        </div>
+
+        <div class="mt-6 p-4 bg-red-50 border border-red-100 rounded-lg text-sm text-red-800">
+            <strong>⚠️ විශේෂ අවධානයට:</strong> පන්දුව පතිත වී ශරීරය දෙසට ඇතුළට එන්නේ නම් (In-cutter), මෙම පහර එල්ල කිරීමෙන් පන්දුව කෙළින්ම කඩුල්ලේ වැදීමේ (Bowled) අවදානමක් ඇත.
+        </div>
+    </div>
+</article>
+
+
+
+
+                        <!-- SHOT 18: SLOG SWEEP -->
+               <article id="shot-18" class="shot-card">
+    <div class="relative group max-w-2xl mx-auto">
+    <div class="relative bg-slate-50 rounded-2xl overflow-hidden border-4 border-white shadow-xl transition-all duration-300 hover:shadow-2xl hover:scale-[1.01]">
+        <img src="https://media.crictracker.com/183185.jpg" 
+             alt="Cricket Slog Sweep Shot in Action" 
+             class="w-full h-auto object-contain block mx-auto transition-transform duration-500 group-hover:scale-105">
+        
+        <div class="absolute bottom-4 right-4 bg-gradient-to-r from-blue-900 to-orange-600 text-white font-bold px-4 py-2 rounded-lg text-[10px] uppercase tracking-widest shadow-lg border border-blue-950">
+        <div class="badge-number">18</div>
+        
+    </div>
+    
+    <div class="p-8">
+        <h3 class="text-2xl font-bold" data-sh-t>Slog Sweep</h3>
+        <p class="text-slate-600 mb-6" data-sh-p>
+            දඟපන්දු යවන්නන්ට එරෙහිව භාවිතා කරන, ඉතාමත් ප්‍රබල "High-risk, High-reward" පහරකි. මෙහි අරමුණ වන්නේ පන්දුව ගුවනින් Mid-wicket හෝ Square-leg සීමාවෙන් පිටතට (Sixer) යැවීමයි.
+        </p>
+
+        <div class="guide-box" style="border-left-color: #f97316;">
+            <h4 class="font-bold mb-4">පහර එල්ල කරන වෘත්තීය මාර්ගෝපදේශය:</h4>
+            <ul class="space-y-4">
+                <li>
+                    <strong class="text-orange-700">01. පන්දුව තෝරාගැනීම:</strong> 
+                    <span class="text-sm block text-slate-700">පන්දුව Middle හෝ Off-stump රේඛාවේ Full length මට්ටමේ පතිත වන විට මෙය තෝරාගන්න. පන්දුව ශරීරයෙන් ඈතින් පතිත වුවහොත් මෙම පහර අනතුරුදායක විය හැක.</span>
+                </li>
+                <li>
+                    <strong class="text-orange-700">02. ස්ථාවරත්වය (Footwork & Base):</strong> 
+                    <span class="text-sm block text-slate-700">ඉදිරිපස පාදය පන්දුව දෙසට හොඳින් ඉදිරියට ගෙන පසුපස දණහිස (Back knee) පොළොව මත තබන්න. මෙය වැඩි බලයක් (Power) උත්පාදනය කිරීමට උදවු වේ.</span>
+                </li>
+                <li>
+                    <strong class="text-orange-700">03. ශරීරයේ ඉරියව්ව (Body Position):</strong> 
+                    <span class="text-sm block text-slate-700">හිස පන්දුවට ඉහළින් ස්ථාවරව තබා ගන්න. උරහිස් සහ ඉණ (Hips) පන්දුව ගමන් කළ යුතු දිශාවට වේගයෙන් කරකවමින් පහරට අවශ්‍ය ජවය ලබා ගන්න.</span>
+                </li>
+                <li>
+                    <strong class="text-orange-700">04. පිත්ත ක්‍රියාත්මක කිරීම (The Swing):</strong> 
+                    <span class="text-sm block text-slate-700">High backlift එකක සිට පිත්ත පන්දුවට යටින් ඉහළට (Low to High) වේගයෙන් ගෙන එන්න. පසුපස අත (Bottom hand) මඟින් උපරිම ශක්තිය ලබා දිය යුතුය.</span>
+                </li>
+                <li>
+                    <strong class="text-orange-700">05. අවසානය (Follow Through):</strong> 
+                    <span class="text-sm block text-slate-700">පහරින් පසු පිත්ත ස්වාභාවිකව උරහිසට ඉහළින් සම්පූර්ණ චාපයක (Arc) කැරකැවීමට ඉඩ දෙන්න. මෙය පන්දුවට උපරිම වේගය සහ දුර ලබා දෙයි.</span>
+                </li>
+            </ul>
+        </div>
+
+        <div class="mt-6 p-4 bg-orange-100 rounded-lg border border-orange-200">
+            <p class="text-orange-900 text-sm font-semibold text-center">
+                💡 මෙම පහර එල්ල කිරීමේදී පන්දුවට "යටින්" සිටීම සහ නිවැරදි Elevation එක ලබා ගැනීම හයේ පහරක් සඳහා අත්‍යවශ්‍ය වේ.
+            </p>
+        </div>
+    </div>
+</article>
+
+
+
+                        <!-- SHOT 19: STRAIGHT DRIVE -->
+                <article id="shot-19" class="shot-card">
+    <div class="relative group max-w-2xl mx-auto">
+    <div class="relative bg-slate-50 rounded-2xl overflow-hidden border-4 border-white shadow-xl transition-all duration-300 hover:shadow-2xl hover:scale-[1.01]">
+        <img src="https://www.probatsman.com/wp-content/uploads/2024/12/Babar-Azam-playing-cover-drive-.jpg" 
+             alt="Babar Azam playing a majestic Straight Drive" 
+             class="w-full h-auto object-contain block mx-auto transition-transform duration-500 group-hover:scale-105">
+        
+        <div class="absolute bottom-4 right-4 bg-gradient-to-r from-green-800 to-emerald-600 text-white font-bold px-4 py-2 rounded-lg text-[10px] uppercase tracking-widest shadow-lg border border-green-900">
+        <div class="badge-number">19</div>
+        
+    </div>
+    
+    <div class="p-8">
+        <h3 class="text-2xl font-bold" data-sh-t>Straight Drive</h3>
+        <p class="text-slate-600 mb-6" data-sh-p>
+            ක්‍රිකට් ක්‍රීඩාවේ පවතින වඩාත්ම පිරිපුන් සහ තාක්ෂණිකව නිවැරදි පහරයි. පන්දු යවන්නා පසුකරමින් කෙළින්ම (Down the ground) එල්ල කරන මෙම පහර ප්‍රගුණ කිරීම පිතිකරුවෙකුගේ තාක්ෂණය ඉහළ නැංවීමට මහෝපකාරී වේ.
+        </p>
+
+        <div class="guide-box" style="border-left-color: #10b981;">
+            <h4 class="font-bold mb-4">පහර එල්ල කරන වෘත්තීය මාර්ගෝපදේශය:</h4>
+            <ul class="space-y-4">
+                <li>
+                    <strong class="text-emerald-700">01. පන්දුව තෝරාගැනීම:</strong> 
+                    <span class="text-sm block text-slate-700">පන්දුව Middle හෝ Off-stump රේඛාවේ Full length හෝ Half-volley ලෙස පතිත වන විට මෙය තෝරාගන්න.</span>
+                </li>
+                <li>
+                    <strong class="text-emerald-700">02. පාදයේ චලනය (Footwork):</strong> 
+                    <span class="text-sm block text-slate-700">හිස පන්දුව දෙසට මුලින්ම යොමු කර (Lead with the head), ඉදිරිපස පාදය පන්දුව පතිත වන ස්ථානයට ආසන්නයට ගෙන යන්න. පිත්ත ගලා යාමට අවශ්‍ය ඉඩ (Room) තබා ගන්න.</span>
+                </li>
+                <li>
+                    <strong class="text-emerald-700">03. ශරීරයේ ඉරියව්ව (Balance):</strong> 
+                    <span class="text-sm block text-slate-700">හිස පන්දුවට කෙළින්ම ඉහළින් තබා ගන්න. ඉදිරිපස උරහිස පන්දු යවන්නා දෙසට කෙළින්ම යොමු වී තිබිය යුතු අතර පසුපස පාදය ස්ථාවරව තබා ගන්න.</span>
+                </li>
+                <li>
+                    <strong class="text-emerald-700">04. පිත්ත ක්‍රියාත්මක කිරීම (Swing):</strong> 
+                    <span class="text-sm block text-slate-700">පිත්ත ඉහළ සිට කෙළින්ම පහළට (Vertical) ගලා යාමට ඉඩ දෙන්න. පන්දුව වැදෙන මොහොතේ පිත්තේ සම්පූර්ණ මුහුණත පන්දු යවන්නා දෙසට පෙන්විය යුතුය.</span>
+                </li>
+                <li>
+                    <strong class="text-emerald-700">05. පාලනය සහ නිමාව:</strong> 
+                    <span class="text-sm block text-slate-700">ඉදිරිපස අතින් (Top hand) පහර පාලනය කරන්න. පහර අවසානයේ පිත්ත පන්දු යවන්නාගේ හිසට ඉහළින් පවතින සේ Follow through එක සම්පූර්ණ කරන්න.</span>
+                </li>
+            </ul>
+        </div>
+
+        <div class="mt-6 p-4 bg-emerald-100 rounded-lg border border-emerald-200">
+            <p class="text-emerald-900 text-sm italic text-center font-medium">
+                <strong>💡 වෘත්තීය රහස:</strong> Straight Drive එකක සාර්ථකත්වය රැඳී ඇත්තේ "හිසෙහි ස්ථාවරත්වය" සහ පන්දුව ශරීරයට ඉතා ආසන්නයේදී ස්පර්ශ කිරීම මතයි.
+            </p>
+        </div>
+    </div>
+</article>
+
+
+
+
+                        <!-- SHOT 20: LOFTED DRIVE -->
+                <article id="shot-20" class="shot-card">
+    <div class="relative group max-w-2xl mx-auto">
+    <div class="relative bg-slate-50 rounded-2xl overflow-hidden border-4 border-white shadow-xl transition-all duration-300 hover:shadow-2xl hover:scale-[1.01]">
+        <img src="https://img1.hscicdn.com/image/upload/f_auto,t_ds_w_1200,q_60/lsci/db/PICTURES/CMS/346500/346577.jpg" 
+             alt="Virat Kohli playing a classic Lofted Cover Drive" 
+             class="w-full h-auto object-contain block mx-auto transition-transform duration-500 group-hover:scale-105">
+        
+        <div class="absolute bottom-4 right-4 bg-gradient-to-r from-orange-600 to-blue-800 text-white font-bold px-4 py-2 rounded-lg text-[10px] uppercase tracking-widest shadow-lg border border-orange-700">
+        <div class="badge-number">20</div>
+        
+    </div>
+    
+    <div class="p-8">
+        <h3 class="text-2xl font-bold" data-sh-t>Lofted Drive</h3>
+        <p class="text-slate-600 mb-6" data-sh-p>
+            පන්දු රකින්නන්ට ඉහළින් (Infielders) පන්දුව ගුවනින් යවා හතරේ හෝ හයේ පහරක් ලබා ගැනීමට එල්ල කරන ප්‍රබල පහරකි. මෙය පන්දුවේ වේගය සහ පිත්තේ "Swing" එක නිවැරදිව සම්බන්ධ කරමින් එල්ල කරන්නක්.
+        </p>
+
+        <div class="guide-box" style="border-left-color: #4f46e5;">
+            <h4 class="font-bold mb-4">පහර එල්ල කරන වෘත්තීය මාර්ගෝපදේශය:</h4>
+            <ul class="space-y-4">
+                <li>
+                    <strong class="text-indigo-700">01. පන්දුව හඳුනා ගැනීම:</strong> 
+                    <span class="text-sm block text-slate-700">Middle හෝ Off-stump රේඛාවේ Full-length හෝ Half-volley පන්දු සඳහා මෙය වඩාත් සුදුසුයි. පන්දුව පිත්තට ළඟා වීමට පෙර මඳක් ඉහළට එසවෙන අවස්ථාව තෝරාගන්න.</span>
+                </li>
+                <li>
+                    <strong class="text-indigo-700">02. පාදයේ චලනය සහ ස්ථාවරත්වය:</strong> 
+                    <span class="text-sm block text-slate-700">ඉදිරිපස පාදය පන්දුව දෙසට ගෙන ගොස් ඉතා ස්ථාවර අඩිතාලමක් (Stable base) සකසා ගන්න. පසුපස පාදය පොළොව මත හොඳින් තබා ගනිමින් සමබරතාවය රැකගන්න.</span>
+                </li>
+                <li>
+                    <strong class="text-indigo-700">03. ශරීරයේ ඉරියව්ව (Elevation):</strong> 
+                    <span class="text-sm block text-slate-700">පන්දුවට අවශ්‍ය උස (Elevation) ලබා දීම සඳහා උඩුකය මඳක් පිටුපසට නැඹුරු කළ හැක. පන්දුව පිත්තේ වදින තෙක්ම ඇස් ස්ථාවරව තබා ගන්න.</span>
+                </li>
+                <li>
+                    <strong class="text-indigo-700">04. පිත්ත ක්‍රියාත්මක කිරීම:</strong> 
+                    <span class="text-sm block text-slate-700">පිත්ත පහළ සිට ඉහළට (Low to High) චාපයක ආකාරයට චලනය කරන්න. දෑත් සම්පූර්ණයෙන්ම දිග හරිමින් (Full extension) පන්දුවට පහළින් පිත්ත තබා පහර දෙන්න.</span>
+                </li>
+                <li>
+                    <strong class="text-indigo-700">05. බලය සහ නිමාව:</strong> 
+                    <span class="text-sm block text-slate-700">මෙහිදී පසුපස අතේ (Bottom hand) ශක්තිය වැඩිපුර භාවිතා වේ. පහරින් පසු පිත්ත ස්වාභාවිකව උරහිසට ඉහළින් අවසන් වන තෙක් Follow through එක සම්පූර්ණ කරන්න.</span>
+                </li>
+            </ul>
+        </div>
+
+        <div class="mt-6 p-4 bg-indigo-100 rounded-lg border-2 border-dashed border-indigo-300 text-sm text-indigo-900">
+            <strong>💡 මතක තබා ගන්න:</strong> Lofted Drive එකක සාර්ථකත්වය රඳා පවතින්නේ පන්දුවට යටින් පිත්ත ගමන් කරවන ආකාරය (Getting under the ball) සහ ලබා දෙන නිවැරදි Elevation එක මතයි.
+        </div>
+    </div>
+</article>
+
+                        <!-- SHOT 21: CUT SHOT -->
+                <article id="shot-21" class="shot-card">
+    <div class="relative group max-w-2xl mx-auto">
+    <div class="relative bg-slate-50 rounded-2xl overflow-hidden border-4 border-white shadow-xl transition-all duration-300 hover:shadow-2xl hover:scale-[1.01]">
+        <img src="https://media.assettype.com/sentinelassam-english%2F2025-11-27%2F7m3u00be%2Ft20-tri-series-nissankas-98-powers-sri-lanka-to-crushing-win-keeps-alive-hopes-of-reaching-final.webp" 
+             alt="Pathum Nissanka playing a clinical Cut Shot" 
+             class="w-full h-auto object-contain block mx-auto transition-transform duration-500 group-hover:scale-105">
+        
+        <div class="absolute bottom-4 right-4 bg-gradient-to-r from-blue-900 to-yellow-500 text-white font-bold px-4 py-2 rounded-lg text-[10px] uppercase tracking-widest shadow-lg border border-blue-950">
+        <div class="badge-number">21</div>
+    
+    </div>
+    
+    <div class="p-8">
+        <h3 class="text-2xl font-bold" data-sh-t>Cut Shot</h3>
+        <p class="text-slate-600 mb-6" data-sh-p>
+            Off-stump එකෙන් පිටත (Wide) එල්ල කරන කෙටි පන්දු වලට එරෙහිව ක්‍රීඩා කරන ඉතාමත් ආකර්ෂණීය පහරකි. පන්දුවේ වේගය පාවිච්චි කරමින් මෙය Point හෝ Backward Point කලාපය හරහා යොමු කරනු ලබයි.
+        </p>
+
+        <div class="guide-box" style="border-left-color: #8b5cf6;">
+            <h4 class="font-bold mb-4">පහර එල්ල කරන වෘත්තීය මාර්ගෝපදේශය:</h4>
+            <ul class="space-y-4">
+                <li>
+                    <strong class="text-violet-700">01. පන්දුව හඳුනා ගැනීම:</strong> 
+                    <span class="text-sm block text-slate-700">පන්දුව Off-stump එකෙන් පිටත (Outside off) සහ කෙටි (Short of length) විය යුතුයි. පන්දුව ශරීරයට ආසන්න නම් මෙය ක්‍රීඩා කිරීමෙන් වළකින්න.</span>
+                </li>
+                <li>
+                    <strong class="text-violet-700">02. පාදයේ චලනය (Back & Across):</strong> 
+                    <span class="text-sm block text-slate-700">පසුපස පාදය පසුපසට සහ Off-side එක දෙසට ගෙන යන්න. එමගින් පහර දීමට අවශ්‍ය ඉඩ (Room) නිර්මාණය කරගනිමින් සිරුරේ බර පසුපස පාදය මත ස්ථාවර කරන්න.</span>
+                </li>
+                <li>
+                    <strong class="text-violet-700">03. පිත්ත ක්‍රියාත්මක කිරීම (The Swing):</strong> 
+                    <span class="text-sm block text-slate-700">පිත්ත හරස් අතට (Horizontal) සහ ඉහළ සිට පහළට ගෙන එන්න. දෑත් හොඳින් දිග හරිමින් (Full extension) පන්දුව සිරුරෙන් ඈතදී ස්පර්ශ කරන්න.</span>
+                </li>
+                <li>
+                    <strong class="text-violet-700">04. මැණික් කටුව සහ පාලනය:</strong> 
+                    <span class="text-sm block text-slate-700">පන්දුව වැදුණු වහාම මැණික් කටුව පහළට කරකවන්න (Roll the wrists). මෙය පන්දුව ගුවනින් ගොස් උඩපන්දුවක් ලෙස දැවී යාම වළක්වා පන්දුව පොළොව දිගේ යැවීමට උදවු වේ.</span>
+                </li>
+            </ul>
+        </div>
+
+        <div class="mt-6 p-4 bg-violet-100 rounded-lg border border-violet-200">
+            <p class="text-violet-900 text-sm italic text-center font-medium">
+                <strong>💡 වෘත්තීය රහස:</strong> Cut shot එකකදී පන්දුවට තදින් පහර දීමට වඩා පන්දුවේ වේගය නිවැරදිව "කැපීම" (Slice) මගින් වැඩි වේගයක් ලබාගත හැක.
+            </p>
+        </div>
+    </div>
+</article>
+
+                          <!-- SHOT 22:SCOOP SHOT -->
+               <article id="shot-22" class="shot-card">
+    <div class="relative group max-w-2xl mx-auto">
+    <div class="relative bg-slate-50 rounded-2xl overflow-hidden border-4 border-white shadow-xl transition-all duration-300 hover:shadow-2xl hover:rotate-[0.5deg]">
+        <img src="https://img1.hscicdn.com/image/upload/f_auto/lsci/db/PICTURES/CMS/292200/292257.6.jpg" 
+             alt="Jos Buttler playing an Audacious Scoop Shot" 
+             class="w-full h-auto object-contain block mx-auto transition-transform duration-500 group-hover:scale-105">
+        
+        <div class="absolute bottom-4 right-4 bg-gradient-to-r from-blue-800 to-orange-500 text-white font-bold px-4 py-2 rounded-lg text-[10px] uppercase tracking-widest shadow-lg border border-blue-900">
+        <div class="badge-number">22</div>
+        
+    </div>
+    
+    <div class="p-8">
+        <h3 class="text-2xl font-bold" data-sh-t>Scoop Shot (Dilscoop)</h3>
+        <p class="text-slate-600 mb-6" data-sh-p>
+            වේගපන්දු යවන්නන් පීඩනයට පත් කිරීමට භාවිතා කරන අතිශය නිර්මාණශීලී පහරකි. පන්දුවේ වේගය භාවිතා කරමින් එය කෙළින්ම කඩුලු රකින්නාට (Wicket-keeper) ඉහළින් Fine-leg දෙසට යොමු කිරීම මෙහිදී සිදු වේ.
+        </p>
+
+        <div class="guide-box" style="border-left-color: #84cc16;">
+            <h4 class="font-bold mb-4">පහර එල්ල කරන වෘත්තීය මාර්ගෝපදේශය:</h4>
+            <ul class="space-y-4">
+                <li>
+                    <strong class="text-lime-700">01. පන්දුව හඳුනා ගැනීම:</strong> 
+                    <span class="text-sm block text-slate-700">පන්දුව Middle හෝ Leg-stump රේඛාවේ Full-length මට්ටමේ පතිත වන විට මෙය තෝරාගන්න. පන්දුව Yorker එකක් වීමට පෙර එයට මුහුණ දීම සාර්ථකත්වයට රහසකි.</span>
+                </li>
+                <li>
+                    <strong class="text-lime-700">02. ඉරියව්ව සහ සූදානම (The Setup):</strong> 
+                    <span class="text-sm block text-slate-700">එක් දණහිසක් පොළොව මත තබා ශරීරය පන්දුවට පහළින් පවතින සේ පහත් වන්න. මෙය පන්දුව ඉහළට එසවීමට (Elevation) අවශ්‍ය ඉඩ සලසා දෙයි.</span>
+                </li>
+                <li>
+                    <strong class="text-lime-700">03. පිත්ත ක්‍රියාත්මක කිරීම (Execution):</strong> 
+                    <span class="text-sm block text-slate-700">පිත්ත තිරස්ව තබා එහි මුහුණත අහස දෙසට හරවන්න. පන්දුවට පහර දීම වෙනුවට, එය පිත්තේ වැදීමට ඉඩ දී කඩුලු රකින්නාගේ හිසට ඉහළින් පිටුපසට "උස්සා" (Scoop) යවන්න.</span>
+                </li>
+                <li>
+                    <strong class="text-lime-700">04. හිස සහ ඇස් (Safety First):</strong> 
+                    <span class="text-sm block text-slate-700">පන්දුව පිත්තේ වදින තෙක්ම නිරීක්ෂණය කරන්න. පන්දුව මුහුණ දෙසට ඒම වළක්වා ගැනීමට හිස පන්දුවේ රේඛාවට (Line of the ball) මඳක් පසෙකින් තබා ගැනීම අනිවාර්ය වේ.</span>
+                </li>
+            </ul>
+        </div>
+
+        <div class="mt-6 p-4 bg-red-50 border-l-4 border-red-500 text-sm text-red-800">
+            <strong>⚠️ අවදානම:</strong> මෙය අතිශය අනතුරුදායක පහරක් බැවින් නිවැරදි ආරක්ෂක උපකරණ (Helmet) පැළඳීම සහ දැඩි පුහුණුවකින් පසුව පමණක් ක්‍රීඩා කිරීම නිර්දේශ කෙරේ.
+        </div>
+    </div>
+</article>
+
+                                 <!-- SHOT 23: SQUARE CUT -->
+                <article id="shot-23" class="shot-card">
+    <div class="relative group max-w-2xl mx-auto">
+    <div class="relative bg-slate-50 rounded-2xl overflow-hidden border-4 border-white shadow-xl transition-all duration-300 hover:shadow-2xl hover:scale-[1.01]">
+        <img src="https://media.newindianexpress.com/newindianexpress%2F2026-02-09%2Fwmuxetaa%2Fmarkram-vs-canada.jpg?w=480&auto=format%2Ccompress&fit=max" 
+             alt="Aiden Markram playing a Square Cut" 
+             class="w-full h-auto object-contain block mx-auto transition-transform duration-500 group-hover:scale-105">
+        
+        <div class="absolute bottom-4 right-4 bg-gradient-to-r from-emerald-800 to-yellow-500 text-white font-bold px-4 py-2 rounded-lg text-[10px] uppercase tracking-widest shadow-lg border border-emerald-900">
+        <div class="badge-number">23</div>
+        
+    </div>
+    
+    <div class="p-8">
+        <h3 class="text-2xl font-bold" data-sh-t>Square Cut</h3>
+        <p class="text-slate-600 mb-6" data-sh-p>
+            Off-stump එකෙන් පිටත (Wide) එල්ල කරන කෙටි පන්දු වලට එරෙහිව ක්‍රීඩා කරන ඉතාමත් ප්‍රබල පහරකි. පන්දුවේ වේගය ප්‍රයෝජනයට ගනිමින් මෙය Point හෝ Backward Point කලාපය හරහා වේගයෙන් යොමු කරනු ලබයි.
+        </p>
+
+        <div class="guide-box" style="border-left-color: #a855f7;">
+            <h4 class="font-bold mb-4">පහර එල්ල කරන වෘත්තීය මාර්ගෝපදේශය:</h4>
+            <ul class="space-y-4">
+                <li>
+                    <strong class="text-purple-700">01. පන්දුව තෝරාගැනීම:</strong> 
+                    <span class="text-sm block text-slate-700">පන්දුව Off-stump එකෙන් පිටත (Wide) සහ කෙටි (Short of length) විය යුතුයි. පන්දුව ශරීරයට ආසන්න නම් මෙම පහර එල්ල කිරීම අනතුරුදායක විය හැක.</span>
+                </li>
+                <li>
+                    <strong class="text-purple-700">02. පාදයේ චලනය (Footwork):</strong> 
+                    <span class="text-sm block text-slate-700">පසුපස පාදය (Back foot) කඩුල්ල දෙසට ගෙන යමින් පන්දුවට පහර දීමට අවශ්‍ය ඉඩ (Room) සලසා ගන්න. ශරීරයේ බර පසුපස පාදය මත ස්ථාවරව තබා ගන්න.</span>
+                </li>
+                <li>
+                    <strong class="text-purple-700">03. පිත්ත ක්‍රියාත්මක කිරීම (The Swing):</strong> 
+                    <span class="text-sm block text-slate-700">පිත්ත හරස් අතට (Horizontal) තබා ඉහළ සිට පහළට ගෙන එන්න. දෑත් හොඳින් දිග හරිමින් (Full extension) පහර දීමෙන් උපරිම වේගය සහ බලය ලබාගත හැක.</span>
+                </li>
+                <li>
+                    <strong class="text-purple-700">04. මැණික් කටුව සහ පාලනය:</strong> 
+                    <span class="text-sm block text-slate-700">පන්දුව පිත්තේ වැදුණු වහාම මැණික් කටුව පහළට කරකවන්න (Roll the wrists). මෙය පන්දුව පොළොව දිගේ ආරක්ෂිතව ගමන් කරවීමට උපකාරී වේ.</span>
+                </li>
+            </ul>
+        </div>
+
+        <div class="mt-6 p-4 bg-purple-100 rounded-lg border-l-4 border-purple-500 text-sm text-purple-900">
+            <strong>💡 වෘත්තීය උපදෙස:</strong> සාර්ථක Square Cut එකක් සඳහා පන්දුව ඔබ වෙත පැමිණෙන තෙක් ඉවසීමෙන් බලා සිටීම සහ නිවැරදි "Room" එක නිර්මාණය කර ගැනීම අතිශය වැදගත් වේ.
+        </div>
+    </div>
+</article>
+
+   <!-- BOWLING -->
+   <section id="spin-24" class="shot-card">
+    <div class="relative group max-w-2xl mx-auto">
+    <div class="relative bg-slate-50 rounded-2xl overflow-hidden border-4 border-white shadow-xl transition-all duration-300 hover:shadow-2xl hover:scale-[1.01]">
+        <img src="https://prod.superblogcdn.com/site_cuid_clr6oh1no0006rmr89yhkxgu8/images/sddefault-1-1710935999770-compressed.png" 
+             alt="Leg Spin vs Off Spin Bowling Technique" 
+             class="w-full h-auto object-contain block mx-auto transition-transform duration-500 group-hover:scale-105">
+        
+        <div class="absolute bottom-4 right-4 bg-gradient-to-r from-purple-800 to-cyan-600 text-white font-bold px-4 py-2 rounded-lg text-[10px] uppercase tracking-widest shadow-lg border border-purple-900">
+        <div class="badge-number">24</div>
+        
+    </div>
+    
+    <div class="p-8">
+        <div class="flex items-center gap-2 mb-2">
+            <span class="px-3 py-1 bg-amber-100 text-amber-700 text-xs font-bold rounded-full uppercase">Bowling: Spin</span>
+        </div>
+        <h3 class="text-2xl font-bold" data-sh-t>Spin Bowling</h3>
+        <p class="text-slate-600 mb-6" data-sh-p>
+            පන්දුවේ වේගයට වඩා Turn, Flight සහ Bounce මගින් පිතිකරුවා මුලා කරන කලාවකි. මෙය ප්‍රධාන වශයෙන් Finger Spin සහ Wrist Spin ලෙස කොටස් දෙකකට බෙදිය හැකියි.
+        </p>
+
+        <div class="overflow-x-auto mb-6">
+            <table class="w-full text-sm text-left border-collapse">
+                <thead>
+                    <tr class="bg-slate-100">
+                        <th class="p-2 border font-bold">වර්ගය</th>
+                        <th class="p-2 border font-bold">ක්‍රමය</th>
+                        <th class="p-2 border font-bold">විශේෂ පන්දු</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="p-2 border font-semibold text-blue-800">Finger Spin</td>
+                        <td class="p-2 border text-slate-700">දබර හා මැද ඇඟිලි භාවිතය (Off-spin, Orthodox)</td>
+                        <td class="p-2 border text-slate-700 text-xs">Doosra, Arm Ball, Top-spinner</td>
+                    </tr>
+                    <tr>
+                        <td class="p-2 border font-semibold text-purple-800">Wrist Spin</td>
+                        <td class="p-2 border text-slate-700">මැණික් කටුව භාවිතය (Leg-spin, Chinaman)</td>
+                        <td class="p-2 border text-slate-700 text-xs">Googly, Slider, Flipper</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="guide-box" style="border-left-color: #f59e0b;">
+            <h4 class="font-bold mb-4 text-amber-800">සාර්ථක දඟපන්දු යවන්නෙකුගේ තාක්ෂණය:</h4>
+            <ul class="space-y-4">
+                <li>
+                    <strong class="text-slate-800">01. Flight & Drift:</strong> 
+                    <span class="text-sm block text-slate-700">පන්දුව වාතයේ මඳක් ඉහළට යවා (Toss up) වේගය වෙනස් කිරීමෙන් පිතිකරුවාගේ Timing අවුල් කරන්න.</span>
+                </li>
+                <li>
+                    <strong class="text-slate-800">02. The Landing:</strong> 
+                    <span class="text-sm block text-slate-700">Full-length සහ Good-length අතර පන්දුව පතිත කිරීම (Length control) මගින් පිතිකරුවා පීඩනයට පත් කරන්න.</span>
+                </li>
+                <li>
+                    <strong class="text-slate-800">03. Body Action (Pivot):</strong> 
+                    <span class="text-sm block text-slate-700">පන්දුව යවන විට මුළු ශරීරයේම බලය (Pivot) භාවිතා කරන්න. එය පන්දුවට වැඩි දඟකැවීමක් ලබා දෙයි.</span>
+                </li>
+                <li>
+                    <strong class="text-slate-800">04. Variations:</strong> 
+                    <span class="text-sm block text-slate-700">සෑම පන්දුවක්ම එකම ආකාරයට යවන්නේ නැතිව, දඟකැවෙන දිශාව සහ වේගය වරින් වර වෙනස් කරන්න.</span>
+                </li>
+            </ul>
+        </div>
+
+        <div class="mt-6 p-4 bg-slate-50 rounded-lg border-2 border-dashed border-slate-200">
+            <p class="text-slate-700 text-sm leading-relaxed">
+                <strong>📝 උපක්‍රමශීලී සටහන:</strong> දඟපන්දු යැවීම යනු ඉවසීම සහ බුද්ධිය පාවිච්චි කළ යුතු කාර්යයකි. පිතිකරුවාගේ දුර්වලතා හඳුනාගෙන "Spot bowling" මගින් නිරවද්‍යතාවය (Accuracy) පවත්වා ගැනීම ඉතා වැදගත් වේ.
+            </p>
+        </div>
+    </div>
+</section>
+
+  <section id="fast-25" class="shot-card">
+    <div class="relative group max-w-2xl mx-auto">
+    <div class="relative bg-slate-50 rounded-2xl overflow-hidden border-4 border-white shadow-xl transition-all duration-300 hover:shadow-2xl hover:scale-[1.01]">
+        <img src="http://www.toporder.co.uk/cdn/shop/files/1_19b577eb-03f9-4914-9278-23a45e297965.png?v=1708032513" 
+             alt="Fast Bowling Grips Guide - Outswing, Inswing, Cross Seam" 
+             class="w-full h-auto object-contain block mx-auto transition-transform duration-500 group-hover:scale-105">
+        
+        <div class="absolute bottom-4 right-4 bg-gradient-to-r from-red-700 to-slate-800 text-white font-bold px-4 py-2 rounded-lg text-[10px] uppercase tracking-widest shadow-lg border border-red-900">
+        <div class="badge-number">25</div>
+        
+    </div>
+    
+    <div class="p-8">
+        <div class="flex items-center gap-2 mb-2">
+            <span class="px-3 py-1 bg-red-100 text-red-700 text-xs font-bold rounded-full uppercase">Bowling: Fast</span>
+        </div>
+        <h3 class="text-2xl font-bold" data-sh-t>Fast Bowling</h3>
+        <p class="text-slate-600 mb-6" data-sh-p>
+            ශාරීරික ශක්තිය, නිවැරදි ඉරියව් (Action) සහ පන්දුව හැසිරවීමේ උපක්‍රමවල එකතුවකි. Pace, Swing සහ Seam මඟින් පිතිකරුවා දැවී යාමට සැලැස්වීම මෙහි ප්‍රධාන අරමුණයි.
+        </p>
+
+        <div class="grid grid-cols-2 gap-3 mb-6">
+            <div class="p-3 bg-slate-100 rounded-lg border-b-2 border-red-500">
+                <span class="text-xs font-bold text-red-600">Swing</span>
+                <p class="text-xs text-slate-700">වාතයේදී පන්දුව දෙපසට හැරවීම (Inswing/Outswing).</p>
+            </div>
+            <div class="p-3 bg-slate-100 rounded-lg border-b-2 border-red-500">
+                <span class="text-xs font-bold text-red-600">Pace</span>
+                <p class="text-xs text-slate-700">පන්දුවේ වේගය සහ Bounce එක පාවිච්චි කිරීම.</p>
+            </div>
+        </div>
+
+        <div class="guide-box" style="border-left-color: #dc2626;">
+            <h4 class="font-bold mb-4 text-red-800">වේගපන්දු යවන්නෙකුගේ තාක්ෂණික කරුණු:</h4>
+            <ul class="space-y-4">
+                <li>
+                    <strong class="text-slate-800">01. ග්‍රහණය (The Grip):</strong> 
+                    <span class="text-sm block text-slate-700">දබර හා මැද ඇඟිලි පන්දුවේ මැහුම් රේඛාව (Seam) මත තබා මහපට ඇඟිල්ලෙන් පහළින් ආධාරකයක් ලබා දෙන්න.</span>
+                </li>
+                <li>
+                    <strong class="text-slate-800">02. පන්දු වර්ග (Variations):</strong> 
+                    <span class="text-sm block text-slate-700">Yorker, Bouncer සහ Slower balls වැනි විවිධත්වයන් මගින් පිතිකරුවා මුලා කිරීමට පුහුණු වන්න.</span>
+                </li>
+                <li>
+                    <strong class="text-slate-800">03. රිද්මය (Run-up & Follow Through):</strong> 
+                    <span class="text-sm block text-slate-700">රිද්මයානුකූලව දිව ඒම සහ පන්දුව යැවූ පසු ඉදිරියට දිව යාම (Follow through) මගින් ආබාධ වළක්වා ගන්න.</span>
+                </li>
+                <li>
+                    <strong class="text-slate-800">04. මැණික් කටුව (Wrist Position):</strong> 
+                    <span class="text-sm block text-slate-700">පන්දුව මුදාහරින මොහොතේ මැණික් කටුව ශක්තිමත්ව සහ කෙළින් (Locked) තබා ගැනීමෙන් නිරවද්‍යතාවය වැඩි වේ.</span>
+                </li>
+            </ul>
+        </div>
+
+        <div class="mt-6 p-4 bg-red-50 rounded-lg border border-red-100">
+            <p class="text-red-900 text-sm font-medium">
+                <strong>🏃 ශාරීරික සුවතාවය:</strong> වේගපන්දු යවන්නෙකුට ශක්තිමත් Core muscles සහ පාද තිබීම අත්‍යවශ්‍යයි. නිරන්තර පුහුණුව ඔබේ වේගය (Speed) වැඩි කරයි.
+            </p>
+        </div>
+    </div>
+</section>
+
+
+
+            </div>
+        </section>
+
+        <!-- FIELDING -->
+        <section class="mb-20">
+            <div class="flex items-center gap-4 mb-10">
+                <div class="h-10 w-2 bg-green-600 rounded-full"></div>
+                <h2 id="fieldingTitle" class="text-3xl font-extrabold text-slate-800 tracking-tight">පන්දු රැකීමේ පුහුණුව</h2>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <article id="catch-26" class="shot-card">
+    <div class="relative group max-w-2xl mx-auto">
+    <div class="relative bg-slate-50 rounded-2xl overflow-hidden border-4 border-white shadow-xl transition-all duration-300 hover:shadow-2xl hover:rotate-[0.5deg]">
+        <img src="https://ichef.bbci.co.uk/ace/standard/3840/cpsprodpb/7749/live/c00c59e0-fbfc-11ef-a5a4-49b4f488356f.jpg" 
+             alt="Glenn Phillips taking a stunning cricket catch" 
+             class="w-full h-auto object-contain block mx-auto transition-transform duration-500 group-hover:scale-105">
+        
+        <div class="absolute bottom-4 right-4 bg-gradient-to-r from-red-600 to-orange-600 text-white font-bold px-4 py-2 rounded-lg text-[10px] uppercase tracking-widest shadow-lg border border-red-700">
+        <div class="badge-number">26</div>
+        
+    </div>
+    
+    <div class="p-8">
+        <div class="flex items-center gap-2 mb-2">
+            <span class="px-3 py-1 bg-indigo-100 text-indigo-700 text-xs font-bold rounded-full uppercase">Fielding Masterclass</span>
+        </div>
+        <h3 class="text-2xl font-bold" data-sh-t>Catching Techniques</h3>
+        <p class="text-slate-600 mb-6" data-sh-p>
+            "Catches win matches" - උඩපන්දුවක් ලබා ගැනීම යනු තාක්ෂණය, අවධානය සහ ක්ෂණික ප්‍රතිචාර දැක්වීමේ එකතුවකි. සාර්ථක පන්දු රකින්නෙකු වීමට අවශ්‍ය සියලුම උපක්‍රම මෙහි අන්තර්ගත වේ.
+        </p>
+
+        <div class="mb-8 p-5 bg-slate-50 rounded-xl border border-slate-200">
+            <h4 class="text-sm font-bold text-slate-800 uppercase mb-4 tracking-wider">මූලික තාක්ෂණික කරුණු 03</h4>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div class="text-center">
+                    <span class="block text-xl mb-1">🤲</span>
+                    <h5 class="font-bold text-xs">Soft Hands</h5>
+                    <p class="text-[10px] text-slate-500">පන්දුව වැදුණු සැණින් දෑත් මඳක් පිටුපසට ගන්න.</p>
+                </div>
+                <div class="text-center border-x border-slate-200">
+                    <span class="block text-xl mb-1">👁️</span>
+                    <h5 class="font-bold text-xs">Eyes on Ball</h5>
+                    <p class="text-[10px] text-slate-500">අතේ ස්පර්ශ වන තෙක්ම පන්දුව දෙස බලා සිටින්න.</p>
+                </div>
+                <div class="text-center">
+                    <span class="block text-xl mb-1">🥣</span>
+                    <h5 class="font-bold text-xs">The Cup</h5>
+                    <p class="text-[10px] text-slate-500">අත්ල දෙක එකතු කර කුඩා බඳුනක හැඩය සාදා ගන්න.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="space-y-6">
+            <h4 class="font-bold text-indigo-800 border-b pb-2">කැච් වර්ග සහ තාක්ෂණය:</h4>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="guide-box" style="border-left-color: #3b82f6;">
+                    <h5 class="font-bold text-blue-700 text-sm mb-2">A. High Catch (ඉහළින් එන)</h5>
+                    <p class="text-xs text-slate-600 leading-relaxed">මුහුණට ඉහළින් <strong>Reverse Cup</strong> ක්‍රමයට අල්ලා ගන්න. පන්දුවට කෙළින්ම යටින් හිස ස්ථාවරව තබා ගැනීම අත්‍යවශ්‍යයි.</p>
+                </div>
+
+                <div class="guide-box" style="border-left-color: #10b981;">
+                    <h5 class="font-bold text-emerald-700 text-sm mb-2">B. Low Catch (පහළින් එන)</h5>
+                    <p class="text-xs text-slate-600 leading-relaxed">ඉණෙන් නැමෙනවා වෙනුවට දණහිස් නවා පහත් වන්න. ඇඟිලි පොළොව දෙසට <strong>(Fingers down)</strong> යොමු කර දෑත් එකතු කරන්න.</p>
+                </div>
+
+                <div class="guide-box" style="border-left-color: #f59e0b;">
+                    <h5 class="font-bold text-amber-700 text-sm mb-2">C. Slip & Close Catching</h5>
+                    <p class="text-xs text-slate-600 leading-relaxed">සිරුරේ බර ඇඟිලි තුඩු මත තබා <strong>Ready position</strong> එකේ සිටින්න. පන්දුව පිත්තේ දාරයේ වදින සැණින් ප්‍රතිචාර දක්වන්න.</p>
+                </div>
+
+                <div class="guide-box" style="border-left-color: #ef4444;">
+                    <h5 class="font-bold text-red-700 text-sm mb-2">D. Diving Catch (පැන අල්ලා ගන්නා)</h5>
+                    <p class="text-xs text-slate-600 leading-relaxed">ආසන්නතම පාදයෙන් පොළොව තල්ලු කර පනින්න <strong>(Push-off)</strong>. පන්දුව අල්ලා ගත් පසු එය පොළොවේ වැදීමට ඉඩ නොදී පපුවට තද කරගන්න.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-4 bg-indigo-900 p-5 rounded-xl text-white">
+            <div>
+                <h5 class="text-xs font-bold uppercase text-indigo-300 mb-2">විශේෂ දක්ෂතා</h5>
+                <ul class="text-[11px] space-y-1 list-disc pl-4 text-indigo-100">
+                    <li>පන්දු රකින්නන් අතර සන්නිවේදනය (Communication).</li>
+                    <li>පිතිකරුවා අනුව පන්දුව එන දිශාව අනුමාන කිරීම (Anticipation).</li>
+                </ul>
+            </div>
+            <div>
+                <h5 class="text-xs font-bold uppercase text-indigo-300 mb-2">පුහුණු අභ්‍යාස (Drills)</h5>
+                <ul class="text-[11px] space-y-1 list-disc pl-4 text-indigo-100">
+                    <li>කෙටි දුර Reaction Drills පුහුණු වන්න.</li>
+                    <li>වෙහෙසට පත්ව සිටින විට පීඩනය යටතේ (Pressure catches) ලබා ගන්න.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</article>
+                <article id="runout-27" class="shot-card">
+     <div class="relative group max-w-2xl mx-auto">
+    <div class="relative bg-slate-50 rounded-2xl overflow-hidden border-4 border-white shadow-xl transition-all duration-300 hover:shadow-2xl hover:scale-[1.01]">
+        <img src="https://img1.hscicdn.com/image/upload/f_auto,t_ds_w_720/lsci/db/PICTURES/CMS/292000/292060.3.jpg" 
+             alt="The iconic MS Dhoni run out in 2019 World Cup Semi-Final" 
+             class="w-full h-auto object-contain block mx-auto transition-transform duration-500 group-hover:scale-105">
+        
+        <div class="absolute bottom-4 right-4 bg-gradient-to-r from-blue-900 to-red-600 text-white font-bold px-4 py-2 rounded-lg text-[10px] uppercase tracking-widest shadow-lg border border-blue-950">
+        <div class="badge-number">27</div>
+        
+    </div>
+    
+    <div class="p-8">
+        <div class="flex items-center gap-2 mb-2">
+            <span class="px-3 py-1 bg-red-100 text-red-700 text-xs font-bold rounded-full uppercase">Fielding: Power Play</span>
+        </div>
+        <h3 class="text-2xl font-bold" data-sh-t>Run Out Technique</h3>
+        <p class="text-slate-600 mb-6" data-sh-p>
+            තරගයක ගමන වෙනස් කළ හැකි ප්‍රබල අවස්ථාවකි. මෙය හුදෙක් පන්දුව විසි කිරීමක් නොව, වේගය, නිරවද්‍යතාවය සහ ක්ෂණික තීරණ ගැනීමේ හැකියාව යන කරුණු වල එකතුවකි.
+        </p>
+
+        <div class="guide-box" style="border-left-color: #ef4444;">
+            <h4 class="font-bold mb-4 text-red-800">සාර්ථක Run Out එකක් සඳහා වෘත්තීය පියවර:</h4>
+            <ul class="space-y-4">
+                <li>
+                    <strong class="text-slate-800">01. පන්දුව වෙත ළඟා වීම (Attack):</strong> 
+                    <span class="text-sm block text-slate-700">පන්දුව එනතෙක් බලා නොසිට ඉදිරියට පැන පන්දුව අහුලා ගන්න. ශරීරය පොළොවට මඳක් නැඹුරු කර (Stay low) සමබරතාවය රැක ගන්න.</span>
+                </li>
+                <li>
+                    <strong class="text-slate-800">02. පන්දුව අතට ගැනීම (Clean Pickup):</strong> 
+                    <span class="text-sm block text-slate-700">එකවරම පන්දුව අතට ගැනීමට පුහුණු වන්න (Clean pick). ඉතා ඉක්මනින් විසි කළ යුතු අවස්ථාවලදී එක් අතකින් (One-handed pickup) අහුලා ගැනීම වෘත්තීය ක්‍රමයයි.</span>
+                </li>
+                <li>
+                    <strong class="text-slate-800">03. විසි කිරීමේ ඉරියව්ව (The Throw):</strong> 
+                    <span class="text-sm block text-slate-700">පන්දුව අහුලා ගත් ගමනින්ම (In one fluid motion) විසි කිරීමට උත්සාහ කරන්න. සැමවිටම කඩුල්ලේ පාදම (Base of the stumps) ඉලක්ක කරන්න.</span>
+                </li>
+                <li>
+                    <strong class="text-slate-800">04. සන්නිවේදනය සහ සහාය (Backup):</strong> 
+                    <span class="text-sm block text-slate-700">"Keeper's end" හෝ "Bowler's end" ලෙස ශබ්ද නඟා පවසන්න. අමතර ලකුණු (Overthrows) වැළැක්වීමට තවත් පන්දු රකින්නෙකු කඩුල්ල පිටුපසින් සිටීම (Backing up) අත්‍යවශ්‍යයි.</span>
+                </li>
+            </ul>
+        </div>
+
+        <div class="mt-6 p-4 bg-amber-50 rounded-lg border border-amber-200">
+            <h5 class="text-sm font-bold text-amber-800 mb-2">⚡ වෘත්තීය පුහුණු රහස: Underarm Flick</h5>
+            <p class="text-xs text-amber-900 leading-relaxed">
+                ඔබ කඩුල්ලට ඉතා ආසන්නයේ සිටී නම්, පන්දුව උරහිසට ඉහළින් විසි නොකර යටින් (Underarm) කඩුල්ලට දමා ගැසීම වඩාත් වේගවත් සහ නිරවද්‍ය වේ.
+            </p>
+        </div>
+    </div>
+</article>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-slate-900 text-white py-12 px-10 text-center">
+        <span class="text-2xl font-black italic text-yellow-400">SLC PRO</span>
+        <p class="text-slate-500 text-xs mt-4 uppercase tracking-[0.3em]">&copy; 2025 Sri Lanka Cricket Digital Guide Powered By Chathura</p>
+    </footer>
+</div>
+
+<script>
+    function toggleSidebar() {
+        document.getElementById('sidebar').classList.toggle('open');
+        document.getElementById('overlay').classList.toggle('hidden');
+    }
+
+    const content = {
+        si: {
+            main: "Sri Lanka Cricket Pro", sub: "වෘත්තීය මට්ටමේ පුහුණු මාර්ගෝපදේශ",
+            bt: "පිතිකරණ පුහුණුව", ft: "පන්දු රැකීමේ පුහුණුව",
+            sh1t: "1. Stance (ඉරියව්ව)", 
+            sh2t: "2. Forward Defensive Stroke",
+            sh3t: "3. Cover Drive",
+            sh4t: "4. Back Foot Drive", sh4p: "කෙටි පන්දු සඳහා කඩුල්ලේ පිටතට (Off-side) එල්ල කරන ප්‍රබල පහරකි.",
+            f1t: "High Catch", f1p: "පිටියේ ඈතින් එන උස පන්දු රැකීම සඳහා ඔබේ දෑස් පන්දුව දෙසටම යොමු කරන්න.",
+            f4t: "Run Out", f4p: "ඉක්මන් අහුලා ගැනීම සහ නිවැරදි ඉලක්කයට විසි කිරීම පුහුණු වන්න."
+        },
+        en: {
+            main: "Sri Lanka Cricket Pro", sub: "Professional Coaching Masterclass",
+            bt: "Batting Masterclass", ft: "Fielding Masterclass",
+            sh1t: "1. Stance Mastery", 
+            sh2t: "2. Forward Defensive Stroke",
+            sh3t: "3. Cover Drive Mastery",
+            sh4t: "4. Back Foot Drive", sh4p: "A powerful back-foot shot played to short-pitched deliveries.",
+            f1t: "High Catching", f1p: "Track the ball with your eyes until it safely lands in your palms.",
+            f4t: "Run Out Precision", f4p: "Practice fast collection and accurate release towards the target."
+        }
+    };
+
+    function switchLanguage(lang) {
+        document.getElementById('mainTitle').innerText = content[lang].main;
+        document.getElementById('subTitle').innerText = content[lang].sub;
+        document.getElementById('battingTitle').innerText = content[lang].bt;
+        document.getElementById('fieldingTitle').innerText = content[lang].ft;
+
+        document.querySelector('[data-sh1-t]').innerText = content[lang].sh1t;
+        document.querySelector('[data-sh2-t]').innerText = content[lang].sh2t;
+        document.querySelector('[data-sh3-t]').innerText = content[lang].sh3t;
+        document.querySelector('[data-sh4-t]').innerText = content[lang].sh4t;
+        document.querySelector('[data-sh4-p]').innerText = content[lang].sh4p;
+
+        document.querySelector('[data-f1-t]').innerText = content[lang].f1t;
+        document.querySelector('[data-f1-p]').innerText = content[lang].f1p;
+        document.querySelector('[data-f4-t]').innerText = content[lang].f4t;
+        document.querySelector('[data-f4-p]').innerText = content[lang].f4p;
+
+        document.getElementById('btn-si').className = lang === 'si' ? "flex-1 py-2 bg-white text-green-900 text-xs font-bold rounded-lg" : "flex-1 py-2 bg-green-800 text-white text-xs font-bold rounded-lg";
+        document.getElementById('btn-en').className = lang === 'en' ? "flex-1 py-2 bg-white text-green-900 text-xs font-bold rounded-lg" : "flex-1 py-2 bg-green-800 text-white text-xs font-bold rounded-lg";
+    }
+
+    document.querySelectorAll('.nav-link').forEach(link => {
+        link.addEventListener('click', (e) => {
+            const href = link.getAttribute('href');
+            if(href.startsWith('#')) {
+                e.preventDefault();
+                const targetId = href.substring(1);
+                const target = document.getElementById(targetId);
+                if(target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                    if(window.innerWidth < 1024) toggleSidebar();
+                }
+            }
+        });
+    });
+
+<script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-analytics.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyAiBWOR--ekX9H5NIqHDGL2tjYD2VrwT9g",
+            authDomain: "sri-lankan-cricket-pro.firebaseapp.com",
+            projectId: "sri-lankan-cricket-pro",
+            storageBucket: "sri-lankan-cricket-pro.firebasestorage.app",
+            messagingSenderId: "774585453955",
+            appId: "1:774585453955:web:d44f6a3d5e254b15153ab6",
+            measurementId: "G-69NWHF0W93"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
+        console.log("Firebase connected successfully to Sri Lanka Cricket Pro!");
+</script>
+</body>
+</html>
