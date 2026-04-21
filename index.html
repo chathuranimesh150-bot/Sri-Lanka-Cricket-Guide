@@ -139,6 +139,11 @@
     </style>
 </head>
 <body class="min-h-screen flex flex-col">
+<button onclick="toggleSidebar()" class="lg:hidden fixed top-4 left-4 z-50 p-2 bg-[#004d26] text-white rounded-lg shadow-lg">
+    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+    </svg>
+</button>
 
 <div id="overlay" class="fixed inset-0 bg-black/60 z-[90] hidden lg:hidden" onclick="toggleSidebar()"></div>
 
